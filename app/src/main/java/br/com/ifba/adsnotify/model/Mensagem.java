@@ -1,9 +1,11 @@
 package br.com.ifba.adsnotify.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Robson on 24/04/2016.
  */
-public class Mensagem {
+public class Mensagem implements Serializable{
 
     private Integer avisoId;
     private String avisoTitle;
