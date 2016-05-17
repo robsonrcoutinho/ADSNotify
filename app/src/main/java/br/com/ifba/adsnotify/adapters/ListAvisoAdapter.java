@@ -3,6 +3,7 @@ package br.com.ifba.adsnotify.adapters;
 import android.content.Context;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,10 @@ public class ListAvisoAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private int repeatCount = 1;
 
-    public ListAvisoAdapter(Context context,List<Mensagem> objects) {
+    public ListAvisoAdapter(Context context,List<Mensagem> avisos) {
         this.context=context;
         inflater = LayoutInflater.from(context);
-        this.avisosList = objects;
+        this.avisosList = avisos;
 
     }
 
@@ -58,11 +59,17 @@ public class ListAvisoAdapter extends BaseAdapter {
             layout = inflater.inflate(R.layout.aviso_layout, null);
             AphidLog.d("Criando nova view para ListAvisoAdapter.class: %d", position);
         }
-        final Mensagem data = avisosList.get(position % avisosList.size());
 
-        UI.<TextView>findViewById(layout, R.id.title).setText(AphidLog.format("%d. %s", position, data.getAvisoTitle()));
 
-        UI.<TextView>findViewById(layout, R.id.description).setText(Html.fromHtml(data.getAvisoBody()));
+            final Mensagem data = avisosList.get(position % avisosList.size());
+             Log.d("Valor Adapter::", data.getAvisoTitle().toString());
+
+            UI.<TextView>findViewById(layout, R.id.title)
+                    .setText(AphidLog.format("%d. %s", position, data.getAvisoTitle()));
+
+            UI.<TextView>findViewById(layout, R.id.description)
+                    .setText(Html.fromHtml(data.getAvisoBody()));
+
 
         return layout;
     }

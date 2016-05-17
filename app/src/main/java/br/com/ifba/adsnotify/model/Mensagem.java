@@ -7,18 +7,10 @@ import java.io.Serializable;
  */
 public class Mensagem implements Serializable{
 
-    private Integer avisoId;
     private String avisoTitle;
     private String avisoBody;
 
 
-    public Integer getAvisoId() {
-        return avisoId;
-    }
-
-    public void setAvisoId(Integer avisoId) {
-        this.avisoId = avisoId;
-    }
 
     public String getAvisoTitle() {
         return avisoTitle;

@@ -16,6 +16,7 @@ public class Config {
     public static final String TOPIC_GLOBAL = "global";
 
     // broadcast receiver intent filters
+    public static final String CARREGA_AVISOS = "https://adsprojectifba.herokuapp.com/ws/avisos";
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";

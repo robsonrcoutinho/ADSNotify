@@ -1,69 +1,98 @@
 package br.com.ifba.adsnotify.fragments;
 
-import android.app.ProgressDialog;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.aphidmobile.flip.FlipViewController;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.adapters.ListAvisoAdapter;
+import br.com.ifba.adsnotify.app.Config;
+import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.Mensagem;
-import br.com.ifba.adsnotify.network.Api;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
+import br.com.ifba.adsnotify.network.DataCallBack;
 
 public class AvisoView extends Fragment{
+    private static final String TAG = AvisoView.class.getSimpleName();
     private FlipViewController flipView;
-    private List<Mensagem> msgLists;
-    private ProgressDialog progressDialog;
+    private Mensagem mensagem;
+    private List<Mensagem> list =  new ArrayList<>();
 
-    public AvisoView() {
 
-    }
-
+    public AvisoView() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-
         flipView = new FlipViewController(getActivity().getApplicationContext(), FlipViewController.VERTICAL);
-        final RestAdapter restadapter = new RestAdapter.Builder().setEndpoint("https://api.myjson.com").build();
-        Api msgApi =  restadapter.create(Api.class);
+        carregaAviso();
+        return flipView;
+    }
+    public void carregaAviso(){
 
-        msgApi.getData(new Callback<List<Mensagem>>() {
+
+        publicaAviso(new DataCallBack() {
             @Override
-            public void success(List<Mensagem> avisos, Response response) {
-                msgLists = avisos;
-                /*
-                progressDialog = ProgressDialog.show(getActivity().getApplicationContext(), "Carregando Avisos", "Aguarde um momento...");
-                progressDialog.show();
-               */
+            public void onSuccess(JSONArray response) {
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject msgJSON = (JSONObject) response.get(i);
 
-                flipView.setAdapter(new ListAvisoAdapter(getActivity().getApplicationContext(), msgLists));
-                Toast.makeText(getActivity().getApplicationContext(), "Avisos Carregados", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Recebido JSON:" + msgJSON.toString());
 
-            }
+                        String titulo = msgJSON.getString("titulo");
+                        String mensg = msgJSON.getString("mensagem");
+                        iniciaLista(titulo, mensg);
 
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(getActivity().getApplicationContext(), "Falha ao carregar avisos", Toast.LENGTH_SHORT).show();
+                    }
+                    flipView.setAdapter(new ListAvisoAdapter(getActivity().getApplicationContext(), list));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "Erro ao tentar conectar com servidor! Verifique sua conexão",
+                            Toast.LENGTH_LONG).show();
+                }
+
             }
         });
-
-       return flipView;
-
     }
 
+    public void publicaAviso(final DataCallBack callback) {
+
+           JsonArrayRequest req = new JsonArrayRequest(Config.CARREGA_AVISOS,new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                callback.onSuccess(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Erro ao tentar conectar com servidor! Verifique sua conexão",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+        MyApplication.getInstance().addToRequestQueue(req);
+    }
+
+
+    public void iniciaLista(String titulo, String corpo){
+        mensagem = new Mensagem();
+        mensagem.setAvisoTitle(titulo);
+        mensagem.setAvisoBody(corpo);
+        list.add(mensagem);
+    }
 
     @Override
     public void onResume() {
