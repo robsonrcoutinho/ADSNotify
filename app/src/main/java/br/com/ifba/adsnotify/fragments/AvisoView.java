@@ -30,13 +30,16 @@ public class AvisoView extends Fragment{
     private List<Mensagem> list =  new ArrayList<>();
 
 
+
     public AvisoView() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         flipView = new FlipViewController(getActivity().getApplicationContext(), FlipViewController.VERTICAL);
         carregaAviso();
+
         return flipView;
     }
     public void carregaAviso(){
@@ -62,6 +65,7 @@ public class AvisoView extends Fragment{
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Erro ao tentar conectar com servidor! Verifique sua conexão",
                             Toast.LENGTH_LONG).show();
+
                 }
 
             }
@@ -78,6 +82,7 @@ public class AvisoView extends Fragment{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Erro ao tentar conectar com servidor! Verifique sua conexão",
                         Toast.LENGTH_LONG).show();

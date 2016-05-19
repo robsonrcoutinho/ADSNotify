@@ -25,6 +25,7 @@
         android:theme="@style/MyMaterialTheme" >
         <activity
             android:name=".activity.MainActivity"
+            android:launchMode="singleTop"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +33,48 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <!-- Avaliação Activity-->
+        <activity
+            android:name="br.com.ifba.adsnotify.activity.AvaliacaoActivity"
+            android:label="AvaliacaoActivity"
+            android:parentActivityName="br.com.ifba.adsnotify.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.ifba.adsnotify.activity.MainActivity" />
+        </activity>
+
+        <!-- Disciplinas Activity-->
+        <activity
+            android:name="br.com.ifba.adsnotify.activity.DisciplinaActivity"
+            android:label="DisciplinaActivity"
+            android:parentActivityName="br.com.ifba.adsnotify.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.ifba.adsnotify.activity.MainActivity" />
+        </activity>
+
+        <!-- Documento Activity-->
+        <activity
+            android:name="br.com.ifba.adsnotify.activity.DocumentoActivity"
+            android:label="DocumentoActivity"
+            android:parentActivityName="br.com.ifba.adsnotify.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.ifba.adsnotify.activity.MainActivity" />
+        </activity>
+
+        <!-- Professor Activity-->
+        <activity
+            android:name="br.com.ifba.adsnotify.activity.ProfessorActivity"
+            android:label="ProfessorActivity"
+            android:parentActivityName="br.com.ifba.adsnotify.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.ifba.adsnotify.activity.MainActivity" />
+        </activity>
+
 
 
         <receiver

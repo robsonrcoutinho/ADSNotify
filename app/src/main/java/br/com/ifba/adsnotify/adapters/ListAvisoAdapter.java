@@ -60,12 +60,11 @@ public class ListAvisoAdapter extends BaseAdapter {
             AphidLog.d("Criando nova view para ListAvisoAdapter.class: %d", position);
         }
 
-
             final Mensagem data = avisosList.get(position % avisosList.size());
              Log.d("Valor Adapter::", data.getAvisoTitle().toString());
 
             UI.<TextView>findViewById(layout, R.id.title)
-                    .setText(AphidLog.format("%d. %s", position, data.getAvisoTitle()));
+                    .setText(AphidLog.format("%s", data.getAvisoTitle()));
 
             UI.<TextView>findViewById(layout, R.id.description)
                     .setText(Html.fromHtml(data.getAvisoBody()));

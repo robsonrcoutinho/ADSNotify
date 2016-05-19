@@ -31,11 +31,6 @@ public class OpcaoView extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.opcao_layout, container, false);
 
-        /*
-        Toolbar topToolBar = (Toolbar)rootView.findViewById(R.id.toolbarOpcao);
-        setSupportActionBar(topToolBar);
-        topToolBar.setLogo(R.drawable.logo);
-        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));*/
 
         List<ItemObject> rowListItem = getAllItemList();
         lLayout = new GridLayoutManager(getActivity().getApplicationContext(), 4);
@@ -54,7 +49,7 @@ public class OpcaoView extends Fragment {
     private List<ItemObject> getAllItemList(){
 
         List<ItemObject> allItems = new ArrayList<>();
-        allItems.add(new ItemObject("Avaliação", R.drawable.um));
+        allItems.add(new ItemObject("Avaliações", R.drawable.um));
         allItems.add(new ItemObject("Avisos", R.drawable.dois));
         allItems.add(new ItemObject("Disciplinas", R.drawable.tres));
         allItems.add(new ItemObject("Documentos", R.drawable.cinco));
