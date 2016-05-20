@@ -75,6 +75,16 @@
                 android:value="br.com.ifba.adsnotify.activity.MainActivity" />
         </activity>
 
+        <!-- CalendarioAcademicoPDF Activity-->
+        <activity
+            android:name="br.com.ifba.adsnotify.docactivities.CalendarioAcademicoPDF"
+            android:label="ProfessorActivity"
+            android:parentActivityName="br.com.ifba.adsnotify.activity.DocumentoActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.ifba.adsnotify.activity.DocumentoActivity" />
+        </activity>
+
 
 
         <receiver
