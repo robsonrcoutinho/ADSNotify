@@ -23,7 +23,7 @@ import br.com.ifba.adsnotify.R;
  * Created by Robson on 20/05/2016.
  */
 public class CalendarioAcademicoPDF extends AppCompatActivity {
-    private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedinstanceState) {
         super.onCreate(savedinstanceState);

@@ -2,6 +2,7 @@ package br.com.ifba.adsnotify.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,21 +41,45 @@ public class RecyclerViewHoldersDoc extends RecyclerView.ViewHolder implements V
 
         switch (position){
             case 0:
-                intent = new Intent(context,CalendarioAcademicoPDF.class);
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
+                        "text/html");
                 context.startActivity(intent);
+                /*
+                intent = new Intent(context,CalendarioAcademicoPDF.class);
+                context.startActivity(intent);*/
                 break;
             case 1:
-                Toast.makeText(view.getContext(), "Posicao = " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "Posicao = " + position, Toast.LENGTH_SHORT).show();
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
+                        "text/html");
+                context.startActivity(intent);
 
                 break;
             case 2:
-                Toast.makeText(view.getContext(), "Posicao = " + position, Toast.LENGTH_SHORT).show();
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
+                        "text/html");
+                context.startActivity(intent);
                 break;
             case 3:
-                Toast.makeText(view.getContext(), "Posicao = " + position, Toast.LENGTH_SHORT).show();
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
+                        "text/html");
+                context.startActivity(intent);
                 break;
             case 4:
-                Toast.makeText(view.getContext(), "Posicao = " + position, Toast.LENGTH_SHORT).show();
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
+                        "text/html");
+                context.startActivity(intent);
+                break;
+            case 5:
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
+                        "text/html");
+                context.startActivity(intent);
                 break;
         }
 

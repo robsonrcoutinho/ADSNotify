@@ -75,7 +75,7 @@ public class MyPreferenceManager{
         editor.putString(KEY_USER_MATRC, user.getMatricula());
         editor.commit();
 
-        Log.e(TAG, "User is stored in shared preferences. " + user.getNome() + ", " + user.getMatricula());
+        Log.e(TAG, "Preferencias compartilhadas user: " + user.getNome() + ", " + user.getMatricula());
     }
 
     public User getUser() {
