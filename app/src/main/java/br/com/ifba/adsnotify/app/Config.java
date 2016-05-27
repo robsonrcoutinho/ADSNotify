@@ -15,11 +15,15 @@ public class Config {
     // Tema global para receber aplicativos de notificações push
     public static final String TOPIC_GLOBAL = "global";
 
-    // broadcast receiver intent filters
+
     public static final String CARREGA_AVISOS = "https://adsprojectifba.herokuapp.com/ws/avisos";
+    public static final String URL_DISCIPLINAS = "http://adsprojectifba.herokuapp.com/ws/disciplinas";
+
+    // broadcast receiver intent filters
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";
+
 
 
    //Id para lidar com handle na tentativa de notificação

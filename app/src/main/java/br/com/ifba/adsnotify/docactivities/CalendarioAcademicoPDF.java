@@ -22,6 +22,11 @@ import br.com.ifba.adsnotify.R;
 /**
  * Created by Robson on 20/05/2016.
  */
+
+/*
+* Classe não está sendo usada
+* A chamada que seria feita nessa classe está sendo feita em adapters/RecyclerViewHoldersDoc.class
+* */
 public class CalendarioAcademicoPDF extends AppCompatActivity {
 
     @Override

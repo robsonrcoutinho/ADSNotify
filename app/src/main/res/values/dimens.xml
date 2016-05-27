@@ -6,4 +6,11 @@
     <dimen name="tab_padding_bottom">16dp</dimen>
     <dimen name="tab_label">14sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
+
+
+    <dimen name="nome_disciplina">17dp</dimen>
+    <dimen name="carga_horaria">15dip</dimen>
+    <dimen name="codigo">12dip</dimen>
+
+
 </resources>

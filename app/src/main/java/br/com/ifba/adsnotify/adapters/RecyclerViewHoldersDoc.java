@@ -7,14 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import br.com.ifba.adsnotify.R;
-import br.com.ifba.adsnotify.activity.AvaliacaoActivity;
-import br.com.ifba.adsnotify.activity.DisciplinaActivity;
-import br.com.ifba.adsnotify.activity.DocumentoActivity;
-import br.com.ifba.adsnotify.activity.ProfessorActivity;
-import br.com.ifba.adsnotify.docactivities.CalendarioAcademicoPDF;
+
 
 /**
  * Created by Robson on 24/04/2016.
@@ -50,7 +44,6 @@ public class RecyclerViewHoldersDoc extends RecyclerView.ViewHolder implements V
                 context.startActivity(intent);*/
                 break;
             case 1:
-                //Toast.makeText(view.getContext(), "Posicao = " + position, Toast.LENGTH_SHORT).show();
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse("http://www.eunapolis.ifba.edu.br/objetos/Quadro_de_substituicao_de_horario.pdf"),
                         "text/html");
