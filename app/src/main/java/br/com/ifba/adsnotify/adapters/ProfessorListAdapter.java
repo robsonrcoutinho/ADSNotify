@@ -9,37 +9,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
-import br.com.ifba.adsnotify.model.Disciplina;
+import br.com.ifba.adsnotify.model.Professor;
 
 /**
  * Created by Robson on 27/05/2016.
  */
-public class DisciplinaListAdapter extends BaseAdapter {
-    private static final String TAG = DisciplinaListAdapter.class.getSimpleName();
+public class ProfessorListAdapter extends BaseAdapter {
+    private static final String TAG = ProfessorListAdapter.class.getSimpleName();
     private Activity activity;
-    private List<Disciplina> disciplinas;
+    private List<Professor> professores;
     private LayoutInflater inflater;
     private Intent intent;
 
 
-    public DisciplinaListAdapter(Activity activity, List<Disciplina> disciplinas){
+    public ProfessorListAdapter(Activity activity, List<Professor> professores){
         this.activity = activity;
-        this.disciplinas = disciplinas;
+        this.professores = professores;
     }
 
     @Override
     public int getCount() {
-        return disciplinas.size();
+        return professores.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return disciplinas.get(position);
+        return professores.get(position);
     }
 
     @Override
@@ -54,25 +51,23 @@ public class DisciplinaListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if(convertView == null)
-            convertView = inflater.inflate(R.layout.list_row_disciplina, null);
-            final Context context = convertView.getContext();
+            convertView = inflater.inflate(R.layout.list_row_professor, null);
+        final Context context = convertView.getContext();
 
-        TextView nomeDisciplina = (TextView) convertView.findViewById(R.id.idNomeDisciplina);
-        TextView cargaHoraria = (TextView) convertView.findViewById(R.id.idCargaHoraria);
-        TextView codigo = (TextView) convertView.findViewById(R.id.idCodigoDisciplina);
+        TextView nomeProfessor = (TextView) convertView.findViewById(R.id.idNomeProfessor);
+        TextView matricula = (TextView) convertView.findViewById(R.id.idMatricula);
 
-        Disciplina disciplina = disciplinas.get(position);
+        Professor prof = professores.get(position);
 
-        nomeDisciplina.setText(disciplina.getNomeDisciplina());
-        cargaHoraria.setText(disciplina.getCargaHoraria());
-        codigo.setText(disciplina.getCodigo());
+        matricula.setText(prof.getMatricula());
+        nomeProfessor.setText(prof.getNome());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String URLementa = disciplinas.get(position).getEmenta();
+                String URLcurriculo = professores.get(position).getCurriculo();
                 intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse(URLementa),
+                intent.setDataAndType(Uri.parse(URLcurriculo),
                         "text/html");
                 context.startActivity(intent);
             }
@@ -80,3 +75,4 @@ public class DisciplinaListAdapter extends BaseAdapter {
         return convertView;
     }
 }
+

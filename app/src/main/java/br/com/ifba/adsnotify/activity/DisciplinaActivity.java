@@ -62,7 +62,7 @@ public class DisciplinaActivity extends AppCompatActivity {
 
         pDialog = new ProgressDialog(this);
 
-        pDialog.setMessage("Carregando...");
+        pDialog.setMessage("Carregando Disciplinas...");
         pDialog.show();
 
         JsonArrayRequest discReq = new JsonArrayRequest(Config.URL_DISCIPLINAS,

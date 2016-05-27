@@ -18,6 +18,7 @@ public class Config {
 
     public static final String CARREGA_AVISOS = "https://adsprojectifba.herokuapp.com/ws/avisos";
     public static final String URL_DISCIPLINAS = "http://adsprojectifba.herokuapp.com/ws/disciplinas";
+    public static final String URL_PROFESSORES = "http://adsprojectifba.herokuapp.com/ws/professores";
 
     // broadcast receiver intent filters
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
