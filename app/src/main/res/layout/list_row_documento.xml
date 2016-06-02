@@ -8,41 +8,20 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:src="@drawable/disc"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="8dp" />
 
-    <!-- Nome Disciplina -->
+    <!-- Nome Titulo -->
     <TextView
-        android:id="@+id/idNomeDisciplina"
+        android:id="@+id/idTituloDocumento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:textSize="@dimen/nome_disciplina"
         android:textStyle="bold" />
-
-    <!-- Carga Horaria -->
-    <TextView
-        android:id="@+id/idCargaHoraria"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/idNomeDisciplina"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:layout_marginTop="1dip"
-        android:textSize="@dimen/carga_horaria" />
-
-    <!-- Codigo Disciplina -->
-    <TextView
-        android:id="@+id/idCodigoDisciplina"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/codigo_color"
-        android:textSize="@dimen/codigo" />
 
     <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"

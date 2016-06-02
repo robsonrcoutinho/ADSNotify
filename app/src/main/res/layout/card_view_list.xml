@@ -16,7 +16,10 @@
             android:id="@+id/item_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/um"
+            android:src="@drawable/prof"
+            android:gravity="center"
+            android:paddingBottom="35dp"
+            android:paddingLeft="25dp"
             android:scaleType="centerCrop" />
 
         <TextView

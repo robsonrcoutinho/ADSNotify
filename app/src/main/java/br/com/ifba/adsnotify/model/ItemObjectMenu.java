@@ -3,12 +3,12 @@ package br.com.ifba.adsnotify.model;
 /**
  * Created by Robson on 24/04/2016.
  */
-public class ItemObject {
+public class ItemObjectMenu {
 
     private String name;
     private int photo;
 
-    public ItemObject(String name, int photo) {
+    public ItemObjectMenu(String name, int photo) {
         this.name = name;
         this.photo = photo;
     }

@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.com.ifba.adsnotify.R;
-import br.com.ifba.adsnotify.model.ItemObject;
+import br.com.ifba.adsnotify.model.ItemObjectMenu;
 
 /**
  * Created by Robson on 24/04/2016.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
 
-    private List<ItemObject> itemList;
+    private List<ItemObjectMenu> itemList;
     private Context context;
 
-    public RecyclerViewAdapter(Context context, List<ItemObject> itemList) {
+    public RecyclerViewAdapter(Context context, List<ItemObjectMenu> itemList) {
         this.itemList = itemList;
         this.context = context;
     }

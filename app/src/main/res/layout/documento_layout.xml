@@ -15,13 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
-        tools:context=".DocumentoActivity">
+        tools:context=".DisciplinaActivity">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_documento"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+        <ListView
+            android:id="@+id/listDocumentos"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp"
+            android:listSelector="@drawable/list_row_selector" />
+
 
     </RelativeLayout>
 

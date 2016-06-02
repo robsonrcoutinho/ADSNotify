@@ -45,18 +45,14 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
                 context.startActivity(intent);
                 break;
             case 1:
-                Toast.makeText(view.getContext(), "Avisos = " + position, Toast.LENGTH_SHORT).show();
-
-                break;
-            case 2:
                 intent = new Intent(context,DisciplinaActivity.class);
                 context.startActivity(intent);
                 break;
-            case 3:
+            case 2:
                 intent = new Intent(context,DocumentoActivity.class);
                 context.startActivity(intent);
                 break;
-            case 4:
+            case 3:
                 intent = new Intent(context,ProfessorActivity.class);
                 context.startActivity(intent);
                 break;

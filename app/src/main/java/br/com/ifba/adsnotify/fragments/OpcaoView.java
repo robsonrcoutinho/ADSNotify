@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import java.util.List;
 
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.RecyclerViewAdapter;
-import br.com.ifba.adsnotify.model.ItemObject;
+import br.com.ifba.adsnotify.model.ItemObjectMenu;
 
 
 /**
@@ -32,8 +31,8 @@ public class OpcaoView extends Fragment {
         final View rootView = inflater.inflate(R.layout.opcao_layout, container, false);
 
 
-        List<ItemObject> rowListItem = getAllItemList();
-        lLayout = new GridLayoutManager(getActivity().getApplicationContext(), 4);
+        List<ItemObjectMenu> rowListItem = getAllItemList();
+        lLayout = new GridLayoutManager(getActivity().getApplicationContext(), 2);
 
         RecyclerView rView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         rView.setHasFixedSize(true);
@@ -46,14 +45,13 @@ public class OpcaoView extends Fragment {
 
         return rootView;
     }
-    private List<ItemObject> getAllItemList(){
+    private List<ItemObjectMenu> getAllItemList(){
 
-        List<ItemObject> allItems = new ArrayList<>();
-        allItems.add(new ItemObject("Avaliações", R.drawable.um));
-        allItems.add(new ItemObject("Avisos", R.drawable.dois));
-        allItems.add(new ItemObject("Disciplinas", R.drawable.tres));
-        allItems.add(new ItemObject("Documentos", R.drawable.cinco));
-        allItems.add(new ItemObject("Professores", R.drawable.quatro));
+        List<ItemObjectMenu> allItems = new ArrayList<>();
+        allItems.add(new ItemObjectMenu("Avaliações", R.drawable.avaliacao));
+        allItems.add(new ItemObjectMenu("Disciplinas", R.drawable.disciplinas));
+        allItems.add(new ItemObjectMenu("Documentos", R.drawable.doc));
+        allItems.add(new ItemObjectMenu("Professores", R.drawable.prof));
 
         return allItems;
     }

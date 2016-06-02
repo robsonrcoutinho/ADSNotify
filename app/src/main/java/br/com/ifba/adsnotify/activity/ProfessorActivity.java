@@ -58,7 +58,7 @@ public class ProfessorActivity extends AppCompatActivity {
 
 
         pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Carregado Professores...");
+        pDialog.setMessage("Carregando Professores...");
         pDialog.show();
 
 
