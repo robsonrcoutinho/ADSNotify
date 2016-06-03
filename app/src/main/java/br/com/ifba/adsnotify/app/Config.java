@@ -20,12 +20,20 @@ public class Config {
     public static final String URL_DISCIPLINAS = "http://adsprojectifba.herokuapp.com/ws/disciplinas";
     public static final String URL_PROFESSORES = "http://adsprojectifba.herokuapp.com/ws/professores";
     public static final String URL_DOCS = "http://adsprojectifba.herokuapp.com/ws/documentos";
+    public static final String REQUEST_LOGIN = "";
 
 
     // broadcast receiver intent filters
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";
+
+
+    public static final String ACCOUNT_TOKEN_TYPE = "FULL";
+    public static final String ARG_ACCOUNT_TYPE = "ACCOUNT_TYPE";
+    public static final String ARG_AUTH_TYPE = "AUTH_TYPE";
+    public static final String ARG_ACCOUNT_NAME = "ACCOUNT_NAME";
+    public static final String ACCOUNT_TYPE = "br.com.ifba.adsnotify.account";
 
 
 

@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley;
 
 import br.com.ifba.adsnotify.activity.LoginActivity;
 import br.com.ifba.adsnotify.helper.MyPreferenceManager;
+import br.com.ifba.adsnotify.model.User;
 
 /**
  * Created by Robson on 10/05/2016.
@@ -19,6 +20,7 @@ import br.com.ifba.adsnotify.helper.MyPreferenceManager;
 * Classe base para manter o estado de aplicação global - Context Application
 * */
 public class MyApplication extends Application {
+    private User user;
 
     public static final String TAG = MyApplication.class
             .getSimpleName();
@@ -33,7 +35,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        user = new User();
     }
+
+    public User getUser() {
+        return user;
+    }
+
 
     public static synchronized MyApplication getInstance() {
         return mInstance;

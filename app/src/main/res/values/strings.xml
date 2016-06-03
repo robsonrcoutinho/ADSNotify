@@ -3,6 +3,7 @@
     <string name="user">USUÁRIO</string>
     <string name="hint_name">Matricula</string>
     <string name="hint_senha">Password</string>
+    <string name="account_type">br.com.ifba.adsnotify.account</string>
 
 
 </resources>

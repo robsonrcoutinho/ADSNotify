@@ -2,10 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.ifba.adsnotify" >
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Necessário para dispositivos mais antigos
      usado para checar app background / foreground status -->
     <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- Autenticacao -->
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- Sincronizacao -->
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+
 
                  <!-- Adicionado para GCM -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -14,8 +26,6 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="br.com.ifba.adsnotify.permission.C2D_MESSAGE" />
                         <!-- Fim GCM-->
-
-
 
     <application
         android:name=".app.MyApplication"
@@ -27,14 +37,16 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name="br.com.ifba.adsnotify.activity.AuthenticatorActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- Avaliação Activity-->
         <activity
@@ -76,15 +88,30 @@
                 android:value="br.com.ifba.adsnotify.activity.MainActivity" />
         </activity>
 
-        <!-- CalendarioAcademicoPDF Activity
-        <activity
-            android:name="br.com.ifba.adsnotify.docactivities.CalendarioAcademicoPDF"
-            android:label="ProfessorActivity"
-            android:parentActivityName="br.com.ifba.adsnotify.activity.DocumentoActivity" >
+        <!-- SERVICO DE AUTENTICACAO -->
+        <service android:name=".sync.AuthenticationService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.ifba.adsnotify.activity.DocumentoActivity" />
-        </activity> -->
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <!-- SERVICO DE SINCRONIZACAO -->
+        <service
+            android:name=".sync.SyncService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter" />
+        </service>
+
 
 
 

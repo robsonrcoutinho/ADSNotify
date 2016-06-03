@@ -1,5 +1,10 @@
 package br.com.ifba.adsnotify.activity;
 
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,20 +20,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.app.Config;
+import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.fragments.AvisoView;
 import br.com.ifba.adsnotify.fragments.OpcaoView;
 import br.com.ifba.adsnotify.fragments.UsuarioView;
 import br.com.ifba.adsnotify.gcm.GcmIntentService;
+import br.com.ifba.adsnotify.model.User;
 
 /**
  * Created by Robson on 22/04/2016.
@@ -42,11 +51,20 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private User user;
+    private AccountManager mAccountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_icon_tabs);
+
+        user = ((MyApplication) getApplication()).getUser();
+        mAccountManager = AccountManager.get(MainActivity.this);
+        getAccounts(null);
+        if(mAccountManager.getAccountsByType(Config.ACCOUNT_TYPE).length == 0){
+            finish();
+        }
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -190,4 +208,40 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
+
+
+    public void getAccounts(View view){
+        mAccountManager.getAuthTokenByFeatures(Config.ACCOUNT_TYPE,
+                Config.ACCOUNT_TOKEN_TYPE,
+                null,
+                MainActivity.this,
+                null,
+                null,
+                new AccountManagerCallback<Bundle>() {
+                    @Override
+                    public void run(AccountManagerFuture<Bundle> future) {
+                        try {
+                            Bundle bundle = future.getResult();
+                            Log.i(TAG, ".getAccounts()");
+                            Log.i(TAG, ".getAccounts() : AccountType = " + bundle.getString(AccountManager.KEY_ACCOUNT_TYPE));
+                            Log.i(TAG, ".getAccounts() : AccountName = " + bundle.getString(AccountManager.KEY_ACCOUNT_NAME));
+                            Log.i(TAG, ".getAccounts() : Token = " + bundle.getString(AccountManager.KEY_AUTHTOKEN));
+
+                            user.setAccountType(bundle.getString(AccountManager.KEY_ACCOUNT_TYPE));
+                            user.setAccountName(bundle.getString(AccountManager.KEY_ACCOUNT_NAME));
+                            user.setToken(bundle.getString(AccountManager.KEY_AUTHTOKEN));
+
+
+                        } catch (OperationCanceledException e) {
+                            e.printStackTrace();
+                        } catch (AuthenticatorException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                null);
+    }
+
 }
