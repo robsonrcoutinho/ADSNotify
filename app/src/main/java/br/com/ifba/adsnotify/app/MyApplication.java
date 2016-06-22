@@ -8,7 +8,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-import br.com.ifba.adsnotify.activity.LoginActivity;
 import br.com.ifba.adsnotify.helper.MyPreferenceManager;
 import br.com.ifba.adsnotify.model.User;
 
@@ -78,12 +77,12 @@ public class MyApplication extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
-
+/*
 
     public void logout() {
         pref.clear();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, );
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
+    }*/
 }

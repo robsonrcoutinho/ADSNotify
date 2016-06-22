@@ -20,7 +20,8 @@ public class Config {
     public static final String URL_DISCIPLINAS = "http://adsprojectifba.herokuapp.com/ws/disciplinas";
     public static final String URL_PROFESSORES = "http://adsprojectifba.herokuapp.com/ws/professores";
     public static final String URL_DOCS = "http://adsprojectifba.herokuapp.com/ws/documentos";
-    public static final String REQUEST_LOGIN = "";
+    public static final String URL_QUESTIONARIO = "http://adsprojectifba.herokuapp.com/ws/questionarios";
+    public static final String REQUEST_LOGIN = "http://adsprojectifba.herokuapp.com/auth/login";
 
 
     // broadcast receiver intent filters

@@ -34,7 +34,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     private AccountManager mAccountManager;
     private User user;
     private HashMap<String, String> paramsn;
-    private EditText matriculaUsuario;
+    private EditText emailUsuario;
     private EditText senhaUsuario;
 
 
@@ -69,7 +69,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
         user.setAccountName(getIntent().getStringExtra(Config.ARG_ACCOUNT_NAME));
         user.setAuthTokenType(getIntent().getStringExtra(Config.ARG_AUTH_TYPE));
         mAccountManager = AccountManager.get(AuthenticatorActivity.this);
-        matriculaUsuario = (EditText) findViewById(R.id.etMatricula);
+        emailUsuario = (EditText) findViewById(R.id.etMatricula);
         senhaUsuario = (EditText) findViewById(R.id.etPasswordUsuario);
     }
 
@@ -82,35 +82,31 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
         Log.i(TAG, ".signInLocal()");
         // findViewById(R.id.btnSignLocal).setEnabled(false);
 
-        user.setMatricula(matriculaUsuario.getText().toString());;
+        user.setEmail(emailUsuario.getText().toString());
+        ;
         user.setSenha(senhaUsuario.getText().toString());
         user.setAuthTokenType(null);
         user.setToken(null);
 
 
-
-
         // testando login e token de sync
-        user.setMatricula("2012dfasdoasdfasdfa");
             Intent it = new Intent();
             it.putExtra(AccountManager.KEY_ACCOUNT_TYPE, user.getAccountType());
-            it.putExtra(AccountManager.KEY_ACCOUNT_NAME, user.getMatricula());
+            it.putExtra(AccountManager.KEY_ACCOUNT_NAME, user.getEmail());
             it.putExtra(AccountManager.KEY_AUTHTOKEN, "dfadgsafhsghdfhnszdfbsdfgshthsrthsrthsrthsfghsfghfghsfghsfg");
             finish(it);
 
         ///
-/*
-        Toast.makeText(AuthenticatorActivity.this, "Erro Login: "+
-                "Dados de acesso incorretos !", Toast.LENGTH_LONG).show();
 
-        paramsn.put("matriculaUsuario", user.getMatricula().toString());
+
+
+  /*      paramsn.put("matriculaUsuario", user.getEmail().toString());
         paramsn.put("senhaUsuario", user.getSenha().toString());
         paramsn.put("authTokenType", null);
         paramsn.put("token", null);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
                 Config.REQUEST_LOGIN,
-                //"https://api.myjson.com/bins/3orma",
                 new JSONObject(paramsn),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -119,7 +115,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
                         Intent it = new Intent();
                         try {
                             it.putExtra(AccountManager.KEY_ACCOUNT_TYPE, user.getAccountType());
-                            it.putExtra(AccountManager.KEY_ACCOUNT_NAME, user.getMatricula());
+                            it.putExtra(AccountManager.KEY_ACCOUNT_NAME, user.getEmail());
                             it.putExtra(AccountManager.KEY_AUTHTOKEN, response.getString("token"));
                             finish(it);
                         } catch (JSONException e) {

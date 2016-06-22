@@ -72,10 +72,10 @@ public class MyPreferenceManager{
     public void storeUser(User user) {
         editor.putString(KEY_USER_ID, user.getId());
         editor.putString(KEY_USER_NAME, user.getNome());
-        editor.putString(KEY_USER_MATRC, user.getMatricula());
+        editor.putString(KEY_USER_MATRC, user.getEmail());
         editor.commit();
 
-        Log.e(TAG, "Preferencias compartilhadas user: " + user.getNome() + ", " + user.getMatricula());
+        Log.e(TAG, "Preferencias compartilhadas user: " + user.getNome() + ", " + user.getEmail());
     }
 
     public User getUser() {

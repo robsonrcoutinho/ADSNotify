@@ -11,6 +11,15 @@
         android:background="@color/colorPrimaryDark"
         android:minHeight="?attr/actionBarSize" />
 
+    <ImageView
+        android:id="@+id/falhaLoginDoc"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="140dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/load" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

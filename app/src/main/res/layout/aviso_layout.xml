@@ -18,6 +18,16 @@
         />
 
 
+    <ImageView
+        android:id="@+id/falhaLogin"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="135dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/load" />
+
+
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"

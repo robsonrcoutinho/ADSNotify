@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -34,6 +38,7 @@ public class ProfessorActivity extends AppCompatActivity {
     private List<Professor> profList = new ArrayList<Professor>();
     private ListView listView;
     private ProfessorListAdapter adapter;
+    private ImageView image;
 
 
     @Override
@@ -41,11 +46,14 @@ public class ProfessorActivity extends AppCompatActivity {
         super.onCreate(savedinstanceState);
         setContentView(R.layout.professor_layout);
 
+        image = (ImageView) findViewById(R.id.falhaLoginProf);
+        image.setVisibility(View.GONE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarProf);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar!=null) {
+        if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Professores");
@@ -53,10 +61,28 @@ public class ProfessorActivity extends AppCompatActivity {
         }
 
         listView = (ListView) findViewById(R.id.listProfs);
-        adapter = new ProfessorListAdapter(this,profList);
+        adapter = new ProfessorListAdapter(this, profList);
         listView.setAdapter(adapter);
 
+        carregaProfessor();
 
+        if(profList.size() == 0 || profList== null){
+            image.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    carregaProfessor();
+                    Log.d("Disciplina", "onTouch image");
+                    return false;
+                }
+            });
+
+        }
+
+
+    }
+
+    public void carregaProfessor(){
+        image.setVisibility(View.GONE);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Carregando Professores...");
         pDialog.show();
@@ -92,6 +118,9 @@ public class ProfessorActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 hidePDialog();
+                Toast.makeText(ProfessorActivity.this, "Erro ao tentar conectar! Verifique sua conexão",
+                        Toast.LENGTH_SHORT).show();
+                image.setVisibility(View.VISIBLE);
             }
         });
 

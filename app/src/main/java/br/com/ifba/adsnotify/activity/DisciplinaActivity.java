@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -37,6 +41,7 @@ public class DisciplinaActivity extends AppCompatActivity {
     private List<Disciplina> discList = new ArrayList<Disciplina>();
     private ListView listView;
     private DisciplinaListAdapter adapter;
+    private ImageView image;
 
 
     @Override
@@ -44,11 +49,15 @@ public class DisciplinaActivity extends AppCompatActivity {
         super.onCreate(savedinstanceState);
         setContentView(R.layout.disciplina_layout);
 
+        image = (ImageView) findViewById(R.id.falhaLoginDisciplina);
+        image.setVisibility(View.GONE);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDisciplina);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar!=null) {
+        if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Disciplinas");
@@ -60,10 +69,29 @@ public class DisciplinaActivity extends AppCompatActivity {
         adapter = new DisciplinaListAdapter(this, discList);
         listView.setAdapter(adapter);
 
-        pDialog = new ProgressDialog(this);
+        carregaDisciplina();
 
+        if(discList.size() == 0 || discList== null){
+            image.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    carregaDisciplina();
+                    Log.d("Disciplina", "onTouch image");
+                    return false;
+                }
+            });
+
+        }
+    }
+
+
+        public void carregaDisciplina(){
+        image.setVisibility(View.GONE);
+
+        pDialog = new ProgressDialog(this);
         pDialog.setMessage("Carregando Disciplinas...");
         pDialog.show();
+
 
         JsonArrayRequest discReq = new JsonArrayRequest(Config.URL_DISCIPLINAS,
                 new Response.Listener<JSONArray>() {
@@ -95,13 +123,16 @@ public class DisciplinaActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 hidePDialog();
+                Toast.makeText(DisciplinaActivity.this,
+                        "Erro ao tentar conectar! Verifique sua conexão",
+                        Toast.LENGTH_LONG).show();
+                image.setVisibility(View.VISIBLE);
 
             }
         });
-
-
         MyApplication.getInstance().addToRequestQueue(discReq);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

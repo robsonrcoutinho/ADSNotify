@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aphidmobile.utils.AphidLog;
@@ -26,11 +27,13 @@ public class ListAvisoAdapter extends BaseAdapter {
     private List<Mensagem> avisosList;
     private LayoutInflater inflater;
     private int repeatCount = 1;
+    private ImageView image;
 
     public ListAvisoAdapter(Context context,List<Mensagem> avisos) {
         this.context=context;
         inflater = LayoutInflater.from(context);
         this.avisosList = avisos;
+
 
     }
 
@@ -68,6 +71,9 @@ public class ListAvisoAdapter extends BaseAdapter {
 
             UI.<TextView>findViewById(layout, R.id.description)
                     .setText(Html.fromHtml(data.getAvisoBody()));
+            UI.<ImageView> findViewById(layout, R.id.falhaLogin).setVisibility(View.GONE);
+
+
 
 
         return layout;

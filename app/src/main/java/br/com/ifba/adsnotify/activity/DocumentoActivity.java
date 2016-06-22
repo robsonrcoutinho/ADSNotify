@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -37,11 +41,15 @@ public class DocumentoActivity extends AppCompatActivity {
     private List<Documento> docList = new ArrayList<Documento>();
     private ListView listView;
     private DocumentoListAdapter adapter;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedinstanceState) {
         super.onCreate(savedinstanceState);
         setContentView(R.layout.documento_layout);
+
+        image = (ImageView) findViewById(R.id.falhaLoginDoc);
+        image.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDocumento);
         setSupportActionBar(toolbar);
@@ -57,6 +65,24 @@ public class DocumentoActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listDocumentos);
         adapter = new DocumentoListAdapter(this, docList);
         listView.setAdapter(adapter);
+        carregaDocumento();
+
+        if(docList.size() == 0 || docList== null){
+            image.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    carregaDocumento();
+                    Log.d("Disciplina", "onTouch image");
+                    return false;
+                }
+            });
+
+        }
+
+
+    }
+    public void carregaDocumento(){
+        image.setVisibility(View.GONE);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Carregando Documentos...");
@@ -91,10 +117,12 @@ public class DocumentoActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 hidePDialog();
+                Toast.makeText(DocumentoActivity.this,"Erro ao tentar conectar! Verifique sua conexão",
+                        Toast.LENGTH_SHORT).show();
+                image.setVisibility(View.VISIBLE);
 
             }
         });
-
 
         MyApplication.getInstance().addToRequestQueue(docReq);    }
 

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
     private String id;
-    private String matricula;
+    private String email;
     private String senha;
     private String nome;
 
@@ -18,10 +18,10 @@ public class User implements Serializable{
 
     public User(){}
 
-    public User(String id,String nome, String matricula ){
+    public User(String id,String nome, String email ){
         this.id = id;
         this.nome = nome;
-        this.matricula =matricula;
+        this.email =email;
     }
     public String getNome() {
         return nome;
@@ -31,12 +31,12 @@ public class User implements Serializable{
         this.nome = nome;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {

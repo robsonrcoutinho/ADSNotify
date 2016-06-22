@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     // Agora inscreve-se a para receber  notificações
                     String token = intent.getStringExtra("token");
 
-                    Toast.makeText(getApplicationContext(), "Token de registro GCM: " + token, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "Token de registro GCM: " + token, Toast.LENGTH_LONG).show();
 
                 } else if (intent.getAction().equals(Config.SENT_TOKEN_TO_SERVER)) {
                     // ID de registro GCM é armazenado no Banco de dados do servidor
