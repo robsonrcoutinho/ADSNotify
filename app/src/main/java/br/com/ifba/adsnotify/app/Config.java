@@ -16,12 +16,12 @@ public class Config {
     public static final String TOPIC_GLOBAL = "global";
 
 
-    public static final String CARREGA_AVISOS = "https://adsprojectifba.herokuapp.com/ws/avisos";
-    public static final String URL_DISCIPLINAS = "http://adsprojectifba.herokuapp.com/ws/disciplinas";
-    public static final String URL_PROFESSORES = "http://adsprojectifba.herokuapp.com/ws/professores";
-    public static final String URL_DOCS = "http://adsprojectifba.herokuapp.com/ws/documentos";
-    public static final String URL_QUESTIONARIO = "http://adsprojectifba.herokuapp.com/ws/questionarios";
-    public static final String REQUEST_LOGIN = "http://adsprojectifba.herokuapp.com/auth/login";
+    public static final String CARREGA_AVISOS = "https://adsprojectifba.herokuapp.com/api/avisos";
+    public static final String URL_DISCIPLINAS = "https://adsprojectifba.herokuapp.com/api/disciplinas";
+    public static final String URL_PROFESSORES ="https://adsprojectifba.herokuapp.com/api/professores";
+    public static final String URL_DOCS = "https://adsprojectifba.herokuapp.com/api/documentos";
+    public static final String URL_QUESTIONARIO = "https://adsprojectifba.herokuapp.com/api/questionarios";
+    public static final String REQUEST_LOGIN = "https://adsprojectifba.herokuapp.com/api/login";
 
 
     // broadcast receiver intent filters

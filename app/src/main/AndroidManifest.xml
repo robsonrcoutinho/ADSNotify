@@ -88,6 +88,11 @@
                 android:value="br.com.ifba.adsnotify.activity.MainActivity" />
         </activity>
 
+        <!-- Singnup Activity-->
+        <activity android:name="br.com.ifba.adsnotify.activity.SignupActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- SERVICO DE AUTENTICACAO -->
         <service android:name=".sync.AuthenticationService">
             <intent-filter>
