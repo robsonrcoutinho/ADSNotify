@@ -85,6 +85,7 @@ public class ProfessorActivity extends AppCompatActivity {
         image.setVisibility(View.GONE);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Carregando Professores...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
 

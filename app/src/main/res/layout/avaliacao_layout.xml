@@ -4,28 +4,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<android.support.v7.widget.Toolbar
-    android:id="@+id/toolbarAvaliacao"
-    android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="@color/colorPrimaryDark"
-    android:minHeight="?attr/actionBarSize" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarAvaliacao"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize" />
 
-      <LinearLayout
-          android:id="@+id/llRelativeAvaliacao"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:padding="8dp"
-          tools:context=".AvaliacaoActivity"
-          android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/llRelativeAvaliacao"
 
-         <!-- <ListView
-              android:id="@+id/listAvaliacao"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:divider="@color/list_divider"
-              android:dividerHeight="1dp"
-              android:listSelector="@drawable/list_row_selector" /> -->
+        android:padding="8dp"
+        tools:context=".AvaliacaoActivity"
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:background="@android:color/darker_gray"
+            android:padding="10dp"/>
+
+        <ListView
+            android:id="@+id/list"
+            android:divider="#000"
+            android:dividerHeight="1dp"
+            android:cacheColorHint="#00000000"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fadingEdge="none"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/prev"
+                android:text="Prev"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/next"
+                android:text="Next"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </LinearLayout>
 

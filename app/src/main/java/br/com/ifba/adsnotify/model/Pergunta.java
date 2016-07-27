@@ -7,16 +7,16 @@ import java.util.List;
  * Created by Robson on 11/06/2016.
  */
 public class Pergunta implements Serializable {
-    private int idPergunta;
+    private Long idPergunta;
     private String enunciado;
     private int tipoPergunta;
     private List<OpcaoResposta> opcaoRespostas;
 
-    public int getIdPergunta() {
+    public Long getIdPergunta() {
         return idPergunta;
     }
 
-    public void setIdPergunta(int idPergunta) {
+    public void setIdPergunta(Long idPergunta) {
         this.idPergunta = idPergunta;
     }
 
@@ -29,7 +29,7 @@ public class Pergunta implements Serializable {
         this.enunciado = enunciado;
     }
 
-    public int isTipoPergunta() {
+    public int getTipoPergunta() {
         return tipoPergunta;
     }
 
@@ -44,4 +44,6 @@ public class Pergunta implements Serializable {
     public void setOpcaoRespostas(List<OpcaoResposta> opcaoRespostas) {
         this.opcaoRespostas = opcaoRespostas;
     }
+
+
 }

@@ -85,6 +85,7 @@ public class DocumentoActivity extends AppCompatActivity {
         image.setVisibility(View.GONE);
 
         pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
         pDialog.setMessage("Carregando Documentos...");
         pDialog.show();
 

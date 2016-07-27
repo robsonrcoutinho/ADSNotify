@@ -5,4 +5,23 @@
     android:background="@drawable/list_row_selector"
     android:padding="8dp" >
 
+
+    <TextView
+        android:id="@+id/idEnunciado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:textSize="@dimen/nome_disciplina"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/btnLay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+
 </RelativeLayout>

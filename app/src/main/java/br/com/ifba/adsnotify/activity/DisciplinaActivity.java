@@ -90,6 +90,7 @@ public class DisciplinaActivity extends AppCompatActivity {
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Carregando Disciplinas...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
 

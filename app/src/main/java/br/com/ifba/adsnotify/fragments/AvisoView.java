@@ -80,6 +80,7 @@ public class AvisoView extends Fragment{
 
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Carregando Avisos...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
 
