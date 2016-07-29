@@ -7,16 +7,16 @@ import java.util.List;
  * Created by Robson on 11/06/2016.
  */
 public class Pergunta implements Serializable {
-    private Long idPergunta;
+    private int idPergunta;
     private String enunciado;
     private int tipoPergunta;
     private List<OpcaoResposta> opcaoRespostas;
 
-    public Long getIdPergunta() {
+    public int getIdPergunta() {
         return idPergunta;
     }
 
-    public void setIdPergunta(Long idPergunta) {
+    public void setIdPergunta(int idPergunta) {
         this.idPergunta = idPergunta;
     }
 

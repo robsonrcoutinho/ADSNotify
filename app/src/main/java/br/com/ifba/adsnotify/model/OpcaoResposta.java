@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class OpcaoResposta implements Serializable {
     private Long idOpcao;
-    private Long idPergunta;
+    private int idPergunta;
     private String resposta;
 
     public Long getIdOpcao() {
@@ -18,11 +18,11 @@ public class OpcaoResposta implements Serializable {
         this.idOpcao = idOpcao;
     }
 
-    public Long getIdPergunta() {
+    public int getIdPergunta() {
         return idPergunta;
     }
 
-    public void setIdPergunta(Long idPergunta) {
+    public void setIdPergunta(int idPergunta) {
         this.idPergunta = idPergunta;
     }
 

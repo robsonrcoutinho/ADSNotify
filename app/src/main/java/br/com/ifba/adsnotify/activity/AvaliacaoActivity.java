@@ -109,13 +109,13 @@ public class AvaliacaoActivity extends AppCompatActivity {
                                 for(int i = 0; i < jsonArrayPerguntas.length(); i++){
                                     objPerguntas = jsonArrayPerguntas.getJSONObject(i);
                                     pergunta = new Pergunta();
-                                    pergunta.setIdPergunta(objPerguntas.getLong("id"));
+                                    pergunta.setIdPergunta(objPerguntas.getInt("id"));
                                     pergunta.setEnunciado(objPerguntas.getString("enunciado"));
                                     pergunta.setTipoPergunta(objPerguntas.getInt("pergunta_fechada"));
                                     perguntas.add(pergunta);
 
                                     JSONArray opcaoRespostaJson = objPerguntas.getJSONArray("opcoes_resposta");
-                                    Log.d("OBJETO opcao_resposta",opcaoRespostaJson.toString());
+                                   // Log.d("OBJETO opcao_resposta",opcaoRespostaJson.toString());
 
                                     if(pergunta_fechada == pergunta.getTipoPergunta()){
                                        // Log.d("RECEBI DENTRO IF:",String.valueOf(pg));
@@ -124,7 +124,7 @@ public class AvaliacaoActivity extends AppCompatActivity {
                                             jsonOpcaoParse = opcaoRespostaJson.getJSONObject(j);
                                             opcaoResposta.setIdOpcao(jsonOpcaoParse.getLong("id"));
                                             opcaoResposta.setResposta(jsonOpcaoParse.getString("resposta_opcao"));
-                                            opcaoResposta.setIdPergunta(jsonOpcaoParse.getLong("pergunta_id"));
+                                            opcaoResposta.setIdPergunta(jsonOpcaoParse.getInt("pergunta_id"));
                                             listOpcaoRespostas.add(opcaoResposta);
                                         }
 
@@ -232,8 +232,8 @@ public class AvaliacaoActivity extends AppCompatActivity {
     }
 
 
-    private void carregaLista(int numero)
-    {
+    private void carregaLista(int numero){
+
         ArrayList<Pergunta> listPergunta = new ArrayList<>();
         ArrayList<OpcaoResposta> listOpcao = new ArrayList<>();
         title.setText("Pergunta "+(numero+1)+" de "+ pageCount);
@@ -255,7 +255,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
         avaliacaoListAdapter = new AvaliacaoListAdapter(this,listPergunta,listOpcao);
         listview.setAdapter(avaliacaoListAdapter);
     }
-
 
 }
 
