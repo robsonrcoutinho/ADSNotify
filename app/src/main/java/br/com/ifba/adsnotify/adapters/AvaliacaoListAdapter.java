@@ -2,7 +2,6 @@ package br.com.ifba.adsnotify.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.model.OpcaoResposta;
 import br.com.ifba.adsnotify.model.Pergunta;
+import br.com.ifba.adsnotify.model.Resposta;
 
 /**
  * Created by Robson on 27/05/2016.
@@ -38,6 +36,8 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     private LinearLayout ll;
     private RadioGroup radioGroup;
     private EditText editText;
+    private List<Resposta> respostasList = new ArrayList<>();
+    private Resposta resposta;
 
 
 
@@ -66,12 +66,12 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        if(inflater == null)
+        if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if(convertView == null)
+        if (convertView == null)
             convertView = inflater.inflate(R.layout.list_row_avaliacao, null);
-            final Context context = convertView.getContext();
+        final Context context = convertView.getContext();
 
         TextView enunciado = (TextView) convertView.findViewById(R.id.idEnunciado);
 
@@ -82,26 +82,39 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
         radioButtons = new RadioButton[tamanhoOpcaoResposta];
 
-        ll = (LinearLayout)convertView.findViewById(R.id.btnLay);
+        ll = (LinearLayout) convertView.findViewById(R.id.btnLay);
 
 
         long idPergunta = pergunta.getIdPergunta();
         int tipoPergunta = pergunta.getTipoPergunta();
 
-        Log.d("TIPOPERGUNTA", String.valueOf(tipoPergunta));
+        Log.d("TIPO PERGUNTA", String.valueOf(tipoPergunta));
 
-        if(pergunta.getTipoPergunta() == PERGUNTA_ABERTA){
+        if (pergunta.getTipoPergunta() == PERGUNTA_ABERTA) {
             editText = new EditText(context);
             editText.setLines(1);
             ll.addView(editText);
+
+            if(editText!= null){
+                resposta = new Resposta();
+
+                resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
+                resposta.setRespostaUsuário(editText.getText().toString());
+            }else{
+                Toast.makeText(context, "Valor não pode ser vazio",Toast.LENGTH_SHORT).show();
+            }
         }
+
+
 
         radioGroup = new RadioGroup(context);
         radioGroup.setOrientation(LinearLayout.VERTICAL);
 
         listRadioButtons = new ArrayList<>();
 
-        for (int i = 0; i < listOpcaoRespostas.size(); i++) {
+        if (listOpcaoRespostas != null) {
+
+            for (int i = 0; i < listOpcaoRespostas.size(); i++) {
                 if (listOpcaoRespostas.get(i).getIdPergunta() == idPergunta) {
                     Log.d(TAG, "IDs SÂO IGUAIS");
                     Log.d(TAG, "ID" + idPergunta + "É = " + listOpcaoRespostas.get(i).getIdPergunta());
@@ -115,30 +128,33 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
 
             }
-        for(int i =0; i<listRadioButtons.size(); i++){
-            radioGroup.addView(listRadioButtons.get(i));
-            if(listRadioButtons.get(i).isChecked()){
-                String text = listRadioButtons.get(i).getText().toString();
-                Log.d("VALOR BUTTON: ",text);
+            for (int i = 0; i < listRadioButtons.size(); i++) {
+                radioGroup.addView(listRadioButtons.get(i));
+                if (listRadioButtons.get(i).isChecked()) {
+                    String text = listRadioButtons.get(i).getText().toString();
+                    Log.d("VALOR BUTTON: ", text);
+                }
+                Log.d("VALOR BUTTON FORA: ", listRadioButtons.get(i).getText().toString());
             }
-            Log.d("VALOR BUTTON FORA: ",listRadioButtons.get(i).getText().toString());
+
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    RadioButton rb = (RadioButton) group.findViewById(checkedId);
+
+                    if (null != rb && checkedId > -1) {
+                        Toast.makeText(context, rb.getText(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            ll.addView(radioGroup);
+        }
+
+            return convertView;
         }
 
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rb = (RadioButton) group.findViewById(checkedId);
 
-                if (null != rb && checkedId > -1) {
-                    Toast.makeText(context, rb.getText(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        ll.addView(radioGroup);
-
-        return convertView;
-    }
 
 
 }
