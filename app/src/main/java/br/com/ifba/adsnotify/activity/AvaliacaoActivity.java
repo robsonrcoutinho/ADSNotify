@@ -43,14 +43,13 @@ import br.com.ifba.adsnotify.model.Disciplina;
 import br.com.ifba.adsnotify.model.Pergunta;
 import br.com.ifba.adsnotify.model.OpcaoResposta;
 import br.com.ifba.adsnotify.model.Questionario;
-import br.com.ifba.adsnotify.model.Resposta;
 import br.com.ifba.adsnotify.model.User;
 
 
 /**
  * Created by Robson on 18/05/2016.
  */
-public class AvaliacaoActivity extends AppCompatActivity  {
+public class AvaliacaoActivity extends AppCompatActivity{
     private static String TAG = AvaliacaoActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private JSONArray jsonArrayPerguntas;
@@ -78,6 +77,8 @@ public class AvaliacaoActivity extends AppCompatActivity  {
     private Disciplina disciplina;
     private List<Disciplina> disciplinasList = new ArrayList<>();
     private String emailuser;
+    private boolean dado;
+    int contador = 0;
 
 
     @Override
@@ -276,7 +277,7 @@ public class AvaliacaoActivity extends AppCompatActivity  {
 
                                 }
                                 TOTAL_LIST_ITEMS = perguntas.size();
-                                avaliando();
+                                avaliando(0);
 
                             }else {
                                 Toast.makeText(AvaliacaoActivity.this, "Não há avaliações disponiveis no momento...",Toast.LENGTH_SHORT).show();
@@ -299,53 +300,81 @@ public class AvaliacaoActivity extends AppCompatActivity  {
         MyApplication.getInstance().addToRequestQueue(discReq);
     }
 
-    public void avaliando() {
-        listview = (ListView) findViewById(R.id.list);
-        btn_prev = (Button) findViewById(R.id.prev);
-        btn_next = (Button) findViewById(R.id.next);
-        title = (TextView) findViewById(R.id.title);
 
-        btn_prev.setEnabled(false);
-        perguntaListVolley = new ArrayList<Pergunta>();
+    public void avaliando(final int posicaoDisciplina) {
+
+        Log.d("Passando aqui", String.valueOf(posicaoDisciplina));
+
+        if (posicaoDisciplina < disciplinasList.size()) {
+
+                listview = (ListView) findViewById(R.id.list);
+                btn_prev = (Button) findViewById(R.id.prev);
+                btn_next = (Button) findViewById(R.id.next);
+                title = (TextView) findViewById(R.id.title);
+
+                btn_prev.setEnabled(false);
+                perguntaListVolley = new ArrayList<Pergunta>();
 
 
-            int val = TOTAL_LIST_ITEMS % NUM_ITEMS_PAGE;
-            val = val == 0 ? 0 : 1;
-            pageCount = TOTAL_LIST_ITEMS / NUM_ITEMS_PAGE + val;
+                int val = TOTAL_LIST_ITEMS % NUM_ITEMS_PAGE;
+                val = val == 0 ? 0 : 1;
+                pageCount = TOTAL_LIST_ITEMS / NUM_ITEMS_PAGE + val;
 
-            for (int i = 0; i < TOTAL_LIST_ITEMS; i++) {
-                perguntaListVolley.add(perguntas.get(i));
-            }
+                for (int i = 0; i < TOTAL_LIST_ITEMS; i++) {
+                    perguntaListVolley.add(perguntas.get(i));
+                }
 
-                        /**/
-        for (int r = 0; r < disciplinasList.size(); r++) {
 
-            carregaLista(0,r);
+                carregaLista(0, posicaoDisciplina);
 
-            final int finalR = r;
+                btn_next.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if(dado == true){
+                            increment++;
+                            carregaLista(increment, posicaoDisciplina);
+                            checkAtivo(posicaoDisciplina);
+                            contador = increment;
+                        }else{
+                            Toast.makeText(AvaliacaoActivity.this, "Por favor, informe sua resposta!", Toast.LENGTH_SHORT).show();
+                            if(increment == 0){
+                                carregaLista(increment, posicaoDisciplina);
+                            }else if(contador == increment){
+                                carregaLista(contador, posicaoDisciplina);
+                            }else{
+                                carregaLista(increment-1, posicaoDisciplina);
+                            }
+
+
+                        }
+                    }
+                });
+
+             /*   btn_prev.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        increment--;
+                        carregaLista(increment, posicaoDisciplina);
+                        checkAtivo(posicaoDisciplina);
+                    }
+                });*/
+
+        }else{
+            btn_next.setText("Finalizar");
             btn_next.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
-
-                    increment++;
-                    carregaLista(increment, finalR);
-                    checkAtivo();
+                    Toast.makeText(AvaliacaoActivity.this, "Finalizando de verdade", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            final int finalR1 = r;
-            btn_prev.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    increment--;
-                    carregaLista(increment, finalR1);
-                    checkAtivo();
-                }
-            });
-
         }
     }
 
 
+
+
     private void carregaLista(int numero, int dPosicao){
+            Log.d("Vem", "AQUI: " + dado );
+
+
 
         ArrayList<Pergunta> listPergunta = new ArrayList<>();
         ArrayList<OpcaoResposta> listOpcao = new ArrayList<>();
@@ -366,39 +395,52 @@ public class AvaliacaoActivity extends AppCompatActivity  {
                 break;
             }
         }
-        avaliacaoListAdapter = new AvaliacaoListAdapter(this,listPergunta,listOpcao);
+        avaliacaoListAdapter = new AvaliacaoListAdapter(this,listPergunta,listOpcao){
+            @Override
+            public void setData(boolean data) {
+                super.setData(data);
+                dado = data;
+
+                Log.d("IMPRIMINDO", String.valueOf(data));
+            }
+        };
         listview.setAdapter(avaliacaoListAdapter);
     }
 
 
-    private void checkAtivo(){
+    private void checkAtivo(int posicaoDisciplina){
 
         if(increment+1 == pageCount){
-            btn_next.setEnabled(true);
-            btn_next.setText("Finalizar");
-            btn_next.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            int tamanhoDisc = disciplinasList.size();
+            if(posicaoDisciplina < tamanhoDisc) {
+                posicaoDisciplina++;
 
-                    Toast.makeText(AvaliacaoActivity.this, "Finalizando", Toast.LENGTH_SHORT).show();
-                    btn_next.setEnabled(false);
-                }
-            });
+                btn_next.setEnabled(true);
+                final int finalPosicaoDisciplina = posicaoDisciplina;
+                btn_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        avaliando(finalPosicaoDisciplina);
+                        increment = 0;
+                        btn_next.setEnabled(true);
+                        TOTAL_LIST_ITEMS = perguntas.size();
+
+                    }
+
+
+                });
+            }
             btn_prev.setEnabled(false);
         }
-        else if(increment == 0)
-        {
+        else if(increment == 0){
             btn_prev.setEnabled(false);
         }
-        else
-        {
+        else{
             btn_prev.setEnabled(false);
             btn_next.setEnabled(true);
+
         }
     }
-
-
-
 
 }
 
