@@ -23,6 +23,8 @@ public class Config {
     public static final String URL_QUESTIONARIO = "https://adsprojectifba.herokuapp.com/api/questionarios";
     public static final String REQUEST_LOGIN = "https://adsprojectifba.herokuapp.com/api/login";
     public static final String DISC_CURSADAS = "https://adsprojectifba.herokuapp.com/api/disciplinasCursadas";
+    public static final String INFO_USER = "https://adsprojectifba.herokuapp.com/api/informacaoUser";
+    public static final String RESPOSTAS_ARRAY = "https://adsprojectifba.herokuapp.com/api/respostaQuestionario";
 
 
     // broadcast receiver intent filters

@@ -11,18 +11,18 @@ import java.util.Date;
  * Created by Robson on 12/06/2016.
  */
 public class Avaliacao implements Serializable {
-    private Long idAvaliacao;
+    private int idAvaliacao;
     private String inicio;
     private String termino;
     private ArrayList<Questionario> questionarios;
 
 
-    public Long getIdSemestre() {
+    public int getIdAvaliacao() {
         return idAvaliacao;
     }
 
-    public void setIdSemestre(Long idSemestre) {
-        this.idAvaliacao = idSemestre;
+    public void setIdAvaliacao(int idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
     }
 
     public String getInicio() {

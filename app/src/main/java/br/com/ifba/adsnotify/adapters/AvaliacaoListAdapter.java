@@ -2,13 +2,11 @@ package br.com.ifba.adsnotify.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -30,29 +28,20 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     private Activity activity;
     private List<Pergunta> perguntas;
     private LayoutInflater inflater;
-    private List<OpcaoResposta> listOpcaoRespostas ;
+    private List<OpcaoResposta> listOpcaoRespostas;
     private RadioButton radioButtons[];
     private List<RadioButton> listRadioButtons;
     private static final int PERGUNTA_FECHADA = 1;
     private static final int PERGUNTA_ABERTA = 0;
     private LinearLayout ll;
     private RadioGroup radioGroup;
-    private   EditText editText;
-    private List<Resposta> respostasList = new ArrayList<>();
-    private Resposta resposta;
+    private EditText editText;
     private Context context;
 
 
-    /*
-    *   id disciplina
-        id avaliação
-        id resposta
-        id pergunta
-        campo_resposta,
-        */
 
     public AvaliacaoListAdapter(Activity activity, List<Pergunta> perguntas,
-                                List<OpcaoResposta> listOpcaoRespostas){
+                                List<OpcaoResposta> listOpcaoRespostas) {
         this.activity = activity;
         this.perguntas = perguntas;
         this.listOpcaoRespostas = listOpcaoRespostas;
@@ -81,42 +70,44 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_row_avaliacao, null);
-         context = convertView.getContext();
+        context = convertView.getContext();
 
         TextView enunciado = (TextView) convertView.findViewById(R.id.idEnunciado);
 
-        Pergunta pergunta = perguntas.get(position);
+        final Pergunta pergunta = perguntas.get(position);
 
         enunciado.setText(pergunta.getEnunciado());
         int tamanhoOpcaoResposta = listOpcaoRespostas.size();
 
         radioButtons = new RadioButton[tamanhoOpcaoResposta];
 
-
         ll = (LinearLayout) convertView.findViewById(R.id.btnLay);
 
 
-        long idPergunta = pergunta.getIdPergunta();
+        final int idPergunta = pergunta.getIdPergunta();
+        Log.d("ID Pergunta: ", String.valueOf(idPergunta));
         int tipoPergunta = pergunta.getTipoPergunta();
 
         Log.d("TIPO PERGUNTA", String.valueOf(tipoPergunta));
 
 
-
         if (pergunta.getTipoPergunta() == PERGUNTA_ABERTA) {
-            editText = new EditText(context);
-            ll.addView(editText);
-
-            resposta = new Resposta();
-            resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
-            resposta.setRespostaUsuário(editText.getText().toString());
-            setData(true);
+            editText= (EditText)convertView.findViewById(R.id.editDinamico);
+            editText.setVisibility(View.VISIBLE);
 
             if(editText.length() == 0){
-                editText = null;
-                setData(false);
+                setData(false,null);
+            }else{
+                Resposta resposta = new Resposta();
+                resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
+                resposta.setRespostaUsuário(editText.getText().toString());
+                resposta.setIdentificador(String.valueOf(resposta.hashCode()));
+                setData(true, resposta);
             }
+
+
         }
+
 
         radioGroup = new RadioGroup(context);
         radioGroup.setOrientation(LinearLayout.VERTICAL);
@@ -143,11 +134,13 @@ public class AvaliacaoListAdapter extends BaseAdapter {
                 radioGroup.addView(listRadioButtons.get(i));
                 if (listRadioButtons.get(i).isChecked()) {
                     String text = listRadioButtons.get(i).getText().toString();
-                   // Log.d("VALOR BUTTON: ", text);
+                    // Log.d("VALOR BUTTON: ", text);
                 }
-               // Log.d("VALOR BUTTON FORA: ", listRadioButtons.get(i).getText().toString());
+                // Log.d("VALOR BUTTON FORA: ", listRadioButtons.get(i).getText().toString());
+                if(i == 0){
+                  setData(false,null);
+                }
             }
-            setData(false);
 
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
@@ -155,18 +148,27 @@ public class AvaliacaoListAdapter extends BaseAdapter {
                     RadioButton rb = (RadioButton) group.findViewById(checkedId);
                     if (null != rb && checkedId > -1) {
                         Toast.makeText(context, rb.getText(), Toast.LENGTH_SHORT).show();
-                        setData(true);
+                        String respostaCampo = (String) rb.getText();
+                        if(respostaCampo != null) {
+                            Resposta resp = new Resposta();
+                            resp.setIdPerguntaRespondida(idPergunta);
+                            resp.setRespostaUsuário(respostaCampo);
+                            resp.setIdentificador(String.valueOf(rb.getId()));
+                            setData(true, resp);
+                        }
                     }
                 }
             });
             ll.addView(radioGroup);
         }
 
-            return convertView;
-        }
+        return convertView;
+    }
 
-    public void setData(boolean data) {
+    public void setData(boolean data, Resposta resposta) {
     }
 
 
 }
+
+

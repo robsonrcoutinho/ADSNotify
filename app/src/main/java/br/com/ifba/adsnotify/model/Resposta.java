@@ -5,10 +5,27 @@ package br.com.ifba.adsnotify.model;
  */
 public class Resposta {
     private int idPerguntaRespondida;
-    private int idResposta;
     private String respostaUsuário;
     private String emailUsurAvaliador;
     private int idDiscplinaAvaliada;
+    private int idAvaliacao;
+    private String identificador;
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+    public int getIdAvaliacao() {
+        return idAvaliacao;
+    }
+
+    public void setIdAvaliacao(int idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
+    }
 
     public String getEmailUsurAvaliador() {
         return emailUsurAvaliador;
@@ -26,13 +43,6 @@ public class Resposta {
         this.respostaUsuário = respostaUsuário;
     }
 
-    public int getIdResposta() {
-        return idResposta;
-    }
-
-    public void setIdResposta(int idResposta) {
-        this.idResposta = idResposta;
-    }
 
     public int getIdPerguntaRespondida() {
         return idPerguntaRespondida;
@@ -48,5 +58,14 @@ public class Resposta {
 
     public void setIdDiscplinaAvaliada(int idDiscplinaAvaliada) {
         this.idDiscplinaAvaliada = idDiscplinaAvaliada;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Resposta)) {
+            return false;
+        }
+        final Resposta other = (Resposta) obj;
+        return this.getIdentificador().equals(other.getIdentificador());
     }
 }

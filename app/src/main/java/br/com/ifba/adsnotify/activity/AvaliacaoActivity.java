@@ -19,14 +19,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +41,7 @@ import br.com.ifba.adsnotify.model.Avaliacao;
 import br.com.ifba.adsnotify.model.Disciplina;
 import br.com.ifba.adsnotify.model.Pergunta;
 import br.com.ifba.adsnotify.model.OpcaoResposta;
-import br.com.ifba.adsnotify.model.Questionario;
+import br.com.ifba.adsnotify.model.Resposta;
 import br.com.ifba.adsnotify.model.User;
 
 
@@ -58,7 +57,6 @@ public class AvaliacaoActivity extends AppCompatActivity{
     private OpcaoResposta opcaoResposta;
     private List<OpcaoResposta> listOpcaoRespostas  = new ArrayList<>();
     private List<Pergunta> perguntas = new ArrayList<>();
-    private Questionario questionario = new Questionario();
     private HashMap<String, String> paramsn;
 
     private ListView listview;
@@ -78,7 +76,9 @@ public class AvaliacaoActivity extends AppCompatActivity{
     private List<Disciplina> disciplinasList = new ArrayList<>();
     private String emailuser;
     private boolean dado;
-    int contador = 0;
+    private int contador = 0;
+    private List<Resposta> respostasList = new ArrayList<>();
+
 
 
     @Override
@@ -190,7 +190,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
                 Config.DISC_CURSADAS,
                 new JSONObject(paramsn),
-                new Response.Listener<JSONArray>() {
+                new Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i(TAG, "Success DISCIPLINA: " + response.toString());
@@ -233,14 +233,13 @@ public class AvaliacaoActivity extends AppCompatActivity{
         avaliacao = new Avaliacao();
 
         JsonObjectRequest discReq = new JsonObjectRequest (Config.URL_QUESTIONARIO,
-                new Response.Listener<JSONObject>() {
+                new Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG + ": RESPONSE", response.toString());
                         hidePDialog();
 
                         try {
-                            avaliacao.setIdSemestre(response.getLong("id"));
+                            avaliacao.setIdAvaliacao(response.getInt("id"));
                             avaliacao.setInicio(response.getString("inicio"));
                             avaliacao.setTermino(response.getString("termino"));
 
@@ -324,7 +323,6 @@ public class AvaliacaoActivity extends AppCompatActivity{
                     perguntaListVolley.add(perguntas.get(i));
                 }
 
-
                 carregaLista(0, posicaoDisciplina);
 
                 btn_next.setOnClickListener(new View.OnClickListener() {
@@ -362,18 +360,39 @@ public class AvaliacaoActivity extends AppCompatActivity{
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(AvaliacaoActivity.this, "Finalizando de verdade", Toast.LENGTH_SHORT).show();
-                }
+
+                    JSONArray jsonArray = new JSONArray();
+
+                    for(int h = 0; h< respostasList.size(); h++){
+
+                        try {
+                            JSONObject json = new JSONObject();
+                            json.put("id_resposta", String.valueOf(respostasList.get(h).getIdPerguntaRespondida()));
+                            json.put("email", respostasList.get(h).getEmailUsurAvaliador());
+                            json.put("campo_resposta", respostasList.get(h).getRespostaUsuário());
+                            json.put("id_avaliacao", String.valueOf(respostasList.get(h).getIdAvaliacao()));
+                            json.put("id_disciplina", String.valueOf(respostasList.get(h).getIdDiscplinaAvaliada()));
+                            jsonArray.put(json);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    try {
+                        enviarAvaliacao(jsonArray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    }
+
             });
         }
     }
 
 
-
-
     private void carregaLista(int numero, int dPosicao){
-            Log.d("Vem", "AQUI: " + dado );
-
+        Log.d("Vem", "AQUI: " + dado );
 
 
         ArrayList<Pergunta> listPergunta = new ArrayList<>();
@@ -395,13 +414,41 @@ public class AvaliacaoActivity extends AppCompatActivity{
                 break;
             }
         }
+        final int posicaoDisciplina = dPosicao;
+
         avaliacaoListAdapter = new AvaliacaoListAdapter(this,listPergunta,listOpcao){
             @Override
-            public void setData(boolean data) {
-                super.setData(data);
+            public void setData(boolean data, Resposta resposta) {
+                super.setData(data, resposta);
                 dado = data;
+                if(resposta != null) {
+                    if(respostasList.isEmpty()) {
+                        resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
+                        resposta.setEmailUsurAvaliador(emailuser);
+                        resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
+                        respostasList.add(resposta);
+                    }else{
+                        if (!respostasList.contains(resposta)) {
+                            resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
+                            resposta.setEmailUsurAvaliador(emailuser);
+                            resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
+                            respostasList.add(resposta);
+                            Log.d("Entrou no IF: ", resposta.getIdentificador());
+                        } else {
+                            Log.d("ANTES RESPOSTA",resposta.getRespostaUsuário());
+                            Log.d("ANTES ID", resposta.getRespostaUsuário());
+                            respostasList.remove(resposta);
+                            resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
+                            resposta.setEmailUsurAvaliador(emailuser);
+                            resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
+                            respostasList.add(resposta);
 
-                Log.d("IMPRIMINDO", String.valueOf(data));
+                            Log.d("DEPOIS RESPOSTA", resposta.getRespostaUsuário());
+                            Log.d("DEPOIS ID", resposta.getIdentificador());
+
+                        }
+                    }
+                }
             }
         };
         listview.setAdapter(avaliacaoListAdapter);
@@ -440,6 +487,40 @@ public class AvaliacaoActivity extends AppCompatActivity{
             btn_next.setEnabled(true);
 
         }
+    }
+
+
+    private void enviarAvaliacao(final JSONArray jsonArray) throws JSONException {
+
+        JSONObject json = new JSONObject();
+        JSONArray array = new JSONArray();
+        json.putOpt("email",emailuser);
+        json.putOpt("respostas", jsonArray);
+        array.put(json);
+        Log.d("JSONArray Respostas", array.toString());
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Enviando Avaliações...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST,
+                Config.RESPOSTAS_ARRAY,
+                array,
+                new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    Log.d("PERGUNTAS :"," ENVIADAS COM SUCESSO");
+                    pDialog.dismiss();
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("PERGUNTAS :"," ERRO AO ENVIAR");
+                    pDialog.dismiss();
+                }
+            });
+        MyApplication.getInstance().addToRequestQueue(stringRequest);
     }
 
 }
