@@ -116,6 +116,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
                 R.style.AppTheme_Dark_Dialog);
         pDialog.setIndeterminate(true);
         pDialog.setMessage("Autenticando...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
 
