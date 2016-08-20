@@ -367,11 +367,10 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
                         try {
                             JSONObject json = new JSONObject();
-                            json.put("id_resposta", String.valueOf(respostasList.get(h).getIdPerguntaRespondida()));
-                            json.put("email", respostasList.get(h).getEmailUsurAvaliador());
+                            json.put("pergunta_id", String.valueOf(respostasList.get(h).getIdPerguntaRespondida()));
                             json.put("campo_resposta", respostasList.get(h).getRespostaUsuário());
-                            json.put("id_avaliacao", String.valueOf(respostasList.get(h).getIdAvaliacao()));
-                            json.put("id_disciplina", String.valueOf(respostasList.get(h).getIdDiscplinaAvaliada()));
+                            json.put("avaliacao_id", String.valueOf(respostasList.get(h).getIdAvaliacao()));
+                            json.put("disciplina_id", String.valueOf(respostasList.get(h).getIdDiscplinaAvaliada()));
                             jsonArray.put(json);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -496,8 +495,9 @@ public class AvaliacaoActivity extends AppCompatActivity{
         JSONArray array = new JSONArray();
         json.putOpt("email",emailuser);
         json.putOpt("respostas", jsonArray);
+        Log.d("Array Inicial", jsonArray.toString());
         array.put(json);
-        Log.d("JSONArray Respostas", array.toString());
+        //Log.d("JSONArray Respostas", array.toString());
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Enviando Avaliações...");
         pDialog.setCancelable(false);
@@ -505,7 +505,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST,
                 Config.RESPOSTAS_ARRAY,
-                array,
+                jsonArray,
                 new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
@@ -517,6 +517,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("PERGUNTAS :"," ERRO AO ENVIAR");
+                    Log.d("PERGUNTAS ERROR :",error.toString());
                     pDialog.dismiss();
                 }
             });

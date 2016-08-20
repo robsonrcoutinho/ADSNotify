@@ -18,18 +18,17 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.aphidmobile.flip.FlipViewController;
-import com.aphidmobile.utils.UI;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.ListAvisoAdapter;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
+import br.com.ifba.adsnotify.gcm.NotificationUtils;
+import br.com.ifba.adsnotify.helper.MyPreferenceManager;
 import br.com.ifba.adsnotify.model.Mensagem;
 import br.com.ifba.adsnotify.network.DataCallBack;
 
@@ -44,12 +43,17 @@ public class AvisoView extends Fragment{
     private View rootView;
     private int op;
 
+
     public AvisoView() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.inflater = inflater;
+
+        /*Limpa notificações armazenadas em sharedPreferences*/
+        MyPreferenceManager.clear();
+        NotificationUtils.clearNotifications();
 
         flipView = new FlipViewController(getActivity().getApplicationContext(), FlipViewController.VERTICAL);
 
@@ -140,6 +144,7 @@ public class AvisoView extends Fragment{
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         req.setRetryPolicy(policy);
         MyApplication.getInstance().addToRequestQueue(req);
+
     }
 
 

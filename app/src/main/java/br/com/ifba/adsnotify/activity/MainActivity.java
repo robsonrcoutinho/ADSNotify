@@ -37,6 +37,7 @@ import br.com.ifba.adsnotify.fragments.AvisoView;
 import br.com.ifba.adsnotify.fragments.OpcaoView;
 import br.com.ifba.adsnotify.fragments.UsuarioView;
 import br.com.ifba.adsnotify.gcm.GcmIntentService;
+import br.com.ifba.adsnotify.gcm.NotificationUtils;
 import br.com.ifba.adsnotify.model.User;
 
 /**
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // Nova notificação push é recebido
-                    Toast.makeText(getApplicationContext(), "Notificação de envio é recebido!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Novo Aviso Recebido!", Toast.LENGTH_LONG).show();
                 }
             }
         };

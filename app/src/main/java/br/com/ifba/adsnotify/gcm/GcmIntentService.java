@@ -127,7 +127,6 @@ public class GcmIntentService extends IntentService {
 
                     try {
                         JSONObject obj = new JSONObject(response);
-
                         // checando error
                         if (obj.getBoolean("error") == false) {
                             // token de transmissão enviada ao servidor

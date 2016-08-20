@@ -2,6 +2,8 @@ package br.com.ifba.adsnotify.adapters;
 
 import android.content.Context;
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,10 +31,13 @@ public class ListAvisoAdapter extends BaseAdapter {
     private int repeatCount = 1;
     private ImageView image;
 
+
+
     public ListAvisoAdapter(Context context,List<Mensagem> avisos) {
         this.context=context;
         inflater = LayoutInflater.from(context);
         this.avisosList = avisos;
+
 
 
     }
@@ -69,8 +74,18 @@ public class ListAvisoAdapter extends BaseAdapter {
             UI.<TextView>findViewById(layout, R.id.title)
                     .setText(AphidLog.format("%s", data.getAvisoTitle()));
 
+            Typeface face = Typeface.createFromAsset(context.getAssets(), "Roboto-BlackItalic.ttf");
+             UI.<TextView>findViewById(layout, R.id.title)
+                     .setTypeface(face);
+
+
             UI.<TextView>findViewById(layout, R.id.description)
                     .setText(Html.fromHtml(data.getAvisoBody()));
+
+            Typeface face2 = Typeface.createFromAsset(context.getAssets(), "Roboto-MediumItalic.ttf");
+            UI.<TextView>findViewById(layout, R.id.description)
+                    .setTypeface(face2);
+
             UI.<ImageView> findViewById(layout, R.id.falhaLogin).setVisibility(View.GONE);
 
 

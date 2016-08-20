@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Cores tela de login-->
-    <color name="primary">#DCDCDC</color>
-     <color name="primary_darker">#808080</color>
+    <color name="primary">#388e3c</color>
+     <color name="primary_darker">#ff9800</color>
      <color name="white">#FFFFFF</color>
      <color name="iron">#CCCCCC</color>
 
-     <color name="colorPrimary">#32CD32</color>
-     <color name="colorPrimaryDark">#32CD32</color>
+     <color name="colorPrimary">#388e3c</color>
+     <color name="colorPrimaryDark">#388e3c</color>
      <color name="textColorPrimary">#FFFFFF</color>
      <color name="windowBackground">#FFFFFF</color>
      <color name="navigationBarColor">#000000</color>
@@ -16,6 +16,7 @@
      <color name="color_primary">#008000</color>
      <color name="color_primary_dark">#008000</color>
      <color name="accent_color">#ffffff</color>
+    <color name="color_layouts">#e8f5e9</color>
 
 
 

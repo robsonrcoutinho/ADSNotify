@@ -21,7 +21,7 @@ public class MyPreferenceManager{
     SharedPreferences pref;
 
     // Editor para Shared preferences
-    SharedPreferences.Editor editor;
+    static SharedPreferences.Editor editor;
 
     // Context
     Context _context;
@@ -64,9 +64,12 @@ public class MyPreferenceManager{
         return pref.getString(KEY_NOTIFICATIONS, null);
     }
 
-    public void clear() {
-        editor.clear();
-        editor.commit();
+    public static void clear() {
+        if(editor !=null){
+            editor.clear();
+            editor.commit();
+        }
+
     }
 
     public void storeUser(User user) {

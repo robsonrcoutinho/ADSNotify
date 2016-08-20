@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/white"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
@@ -40,6 +41,7 @@
             <EditText android:id="@+id/etPasswordUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:inputType="textPassword"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
@@ -51,6 +53,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:textColor="@color/white"
             android:text="Login"/>
 
 
@@ -58,8 +61,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Ainda não tem conta ? Crie uma"
+            android:text="Registre-se"
             android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="16dip"/>
 
     </LinearLayout>
