@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -74,9 +76,6 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
         JsonArrayRequest req = new JsonArrayRequest(Config.CARREGA_AVISOS,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-               /* if(list != null || !list.isEmpty()){
-                    list.clear();
-                }*/
                 if(response.length() > 0){
                 for (int i = 0; i < response.length(); i++) {
                     JSONObject msgJSON = null;
@@ -104,6 +103,7 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
             @Override
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
+              //  Toast.makeText(getActivity(), "Sem conexão!", Toast.LENGTH_SHORT).show();
             }
         });
         MyApplication.getInstance().addToRequestQueue(req);

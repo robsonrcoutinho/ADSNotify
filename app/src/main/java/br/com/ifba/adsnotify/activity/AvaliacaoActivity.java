@@ -6,6 +6,11 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.OperationCanceledException;
 import android.support.v4.app.NavUtils;
@@ -16,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +43,7 @@ import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.AvaliacaoListAdapter;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
+import br.com.ifba.adsnotify.fragments.OpcaoView;
 import br.com.ifba.adsnotify.model.Avaliacao;
 import br.com.ifba.adsnotify.model.Disciplina;
 import br.com.ifba.adsnotify.model.Pergunta;
@@ -61,7 +68,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
     private ListView listview;
     private TextView title;
-    private Button btn_prev;
+   // private Button btn_prev;
     private Button btn_next;
     private ArrayList<Pergunta> perguntaListVolley;
     private AvaliacaoListAdapter  avaliacaoListAdapter;
@@ -77,6 +84,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
     private String emailuser;
     private boolean dado;
     private int contador = 0;
+    private LinearLayout ll;
     private List<Resposta> respostasList = new ArrayList<>();
 
 
@@ -95,6 +103,8 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
         paramsn = new HashMap<String,String>();
 
+        ll = (LinearLayout) findViewById(R.id.llRelativeAvaliacao);
+
         for(int i = 0; i < accounts.length; i++) {
             name[i] = accounts[i].name;
             emailuser = accounts[i].name;
@@ -103,8 +113,13 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarAvaliacao);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        ActionBar actionBar = getSupportActionBar();
 
         if(actionBar!=null) {
             actionBar.setHomeButtonEnabled(true);
@@ -195,25 +210,32 @@ public class AvaliacaoActivity extends AppCompatActivity{
                     public void onResponse(JSONArray response) {
                         Log.i(TAG, "Success DISCIPLINA: " + response.toString());
 
-                        for(int i =0; i<response.length(); i++){
-                            try {
-                                disciplina = new Disciplina();
-                                JSONObject discJSON = (JSONObject)response.get(i);
-                                disciplina.setCodigo(discJSON.getString("codigo"));
-                                disciplina.setNomeDisciplina(discJSON.getString("nome"));
-                                disciplinasList.add(disciplina);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                        if(response.length() >0) {
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    disciplina = new Disciplina();
+                                    JSONObject discJSON = (JSONObject) response.get(i);
+                                    disciplina.setCodigo(discJSON.getString("codigo"));
+                                    disciplina.setNomeDisciplina(discJSON.getString("nome"));
+                                    disciplinasList.add(disciplina);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
+                            hidePDialog();
+                            carregarAvaliacao();
+                        }else{
+                            Toast.makeText(AvaliacaoActivity.this, "Não há avaliações no momento. Tente novamente!", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(AvaliacaoActivity.this, MainActivity.class));
                         }
-                        hidePDialog();
-                        carregarAvaliacao();
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AvaliacaoActivity.this, "Sem conexão!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AvaliacaoActivity.this, MainActivity.class));
                         Log.d("Erro DISCIPLINA", error.toString());
                         hidePDialog();
                     }
@@ -225,6 +247,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
     }
 
     public void carregarAvaliacao(){
+        ll.setVisibility(View.VISIBLE);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Redirecionando para Avaliação...");
         pDialog.setCancelable(false);
@@ -307,11 +330,12 @@ public class AvaliacaoActivity extends AppCompatActivity{
         if (posicaoDisciplina < disciplinasList.size()) {
 
                 listview = (ListView) findViewById(R.id.list);
-                btn_prev = (Button) findViewById(R.id.prev);
                 btn_next = (Button) findViewById(R.id.next);
-                title = (TextView) findViewById(R.id.title);
+                title = (TextView) findViewById(R.id.titlee);
+                Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-BlackItalic.ttf");
+                title.setTypeface(face);
 
-                btn_prev.setEnabled(false);
+
                 perguntaListVolley = new ArrayList<Pergunta>();
 
 
@@ -346,14 +370,6 @@ public class AvaliacaoActivity extends AppCompatActivity{
                         }
                     }
                 });
-
-             /*   btn_prev.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        increment--;
-                        carregaLista(increment, posicaoDisciplina);
-                        checkAtivo(posicaoDisciplina);
-                    }
-                });*/
 
         }else{
             btn_next.setText("Finalizar");
@@ -399,6 +415,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
 
         title.setText(disciplinasList.get(dPosicao).getCodigo().toString()+ ": Pergunta "+(numero+1)+" de "+ pageCount);
+
 
 
         for(int i=0; i<listOpcaoRespostas.size();i++){
@@ -476,13 +493,13 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
                 });
             }
-            btn_prev.setEnabled(false);
+           // btn_prev.setEnabled(false);
         }
         else if(increment == 0){
-            btn_prev.setEnabled(false);
+           // btn_prev.setEnabled(false);
         }
         else{
-            btn_prev.setEnabled(false);
+            //btn_prev.setEnabled(false);
             btn_next.setEnabled(true);
 
         }

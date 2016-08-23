@@ -1,6 +1,9 @@
 package br.com.ifba.adsnotify.activity;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -52,8 +55,15 @@ public class DocumentoActivity extends AppCompatActivity {
         image.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDocumento);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         ActionBar actionBar = getSupportActionBar();
+
+
 
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);

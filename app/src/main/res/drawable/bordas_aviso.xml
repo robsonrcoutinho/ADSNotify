@@ -11,7 +11,7 @@
     <!-- view borda cor e largura -->
     <stroke
         android:width="5dp"
-        android:color="#ff9800" >
+        android:color="#000" >
     </stroke>
 
 

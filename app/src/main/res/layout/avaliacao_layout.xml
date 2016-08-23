@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_layouts"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -13,22 +14,22 @@
 
     <LinearLayout
         android:id="@+id/llRelativeAvaliacao"
-
         android:padding="8dp"
         tools:context=".AvaliacaoActivity"
-
         android:layout_width="fill_parent"
+        android:background="@color/color_layouts"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titlee"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
+            android:textColor="@color/white"
             android:gravity="center"
             android:textSize="16sp"
-            android:background="@android:color/darker_gray"
+            android:background="@color/primary_darker"
             android:padding="10dp"/>
 
         <ListView
@@ -46,17 +47,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <Button
+           <!-- <Button
                 android:id="@+id/prev"
                 android:text="Anterior"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"/> -->
 
             <Button
                 android:id="@+id/next"
                 android:text="Próximo"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
