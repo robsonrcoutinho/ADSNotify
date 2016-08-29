@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
@@ -32,6 +33,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,11 +41,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.AvaliacaoListAdapter;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
-import br.com.ifba.adsnotify.fragments.OpcaoView;
 import br.com.ifba.adsnotify.model.Avaliacao;
 import br.com.ifba.adsnotify.model.Disciplina;
 import br.com.ifba.adsnotify.model.Pergunta;
@@ -55,27 +57,27 @@ import br.com.ifba.adsnotify.model.User;
 /**
  * Created by Robson on 18/05/2016.
  */
-public class AvaliacaoActivity extends AppCompatActivity{
+public class AvaliacaoActivity extends AppCompatActivity {
     private static String TAG = AvaliacaoActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private JSONArray jsonArrayPerguntas;
-    private  Avaliacao avaliacao;
+    private Avaliacao avaliacao;
     private Pergunta pergunta;
     private OpcaoResposta opcaoResposta;
-    private List<OpcaoResposta> listOpcaoRespostas  = new ArrayList<>();
+    private List<OpcaoResposta> listOpcaoRespostas = new ArrayList<>();
     private List<Pergunta> perguntas = new ArrayList<>();
     private HashMap<String, String> paramsn;
 
     private ListView listview;
     private TextView title;
-   // private Button btn_prev;
+    // private Button btn_prev;
     private Button btn_next;
     private ArrayList<Pergunta> perguntaListVolley;
-    private AvaliacaoListAdapter  avaliacaoListAdapter;
-    private int pageCount ;
+    private AvaliacaoListAdapter avaliacaoListAdapter;
+    private int pageCount;
     private int increment = 0;
     public int TOTAL_LIST_ITEMS = 0;
-    public int NUM_ITEMS_PAGE   = 1;
+    public int NUM_ITEMS_PAGE = 1;
 
     private AccountManager mAccountManager;
     private User user;
@@ -86,7 +88,6 @@ public class AvaliacaoActivity extends AppCompatActivity{
     private int contador = 0;
     private LinearLayout ll;
     private List<Resposta> respostasList = new ArrayList<>();
-
 
 
     @Override
@@ -101,11 +102,11 @@ public class AvaliacaoActivity extends AppCompatActivity{
         final Account[] accounts = mAccountManager.getAccountsByType(Config.ACCOUNT_TYPE);
         String[] name = new String[accounts.length];
 
-        paramsn = new HashMap<String,String>();
+        paramsn = new HashMap<String, String>();
 
         ll = (LinearLayout) findViewById(R.id.llRelativeAvaliacao);
 
-        for(int i = 0; i < accounts.length; i++) {
+        for (int i = 0; i < accounts.length; i++) {
             name[i] = accounts[i].name;
             emailuser = accounts[i].name;
             Log.d("Nome Conta: ", name[i].toString());
@@ -121,7 +122,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
         ActionBar actionBar = getSupportActionBar();
 
-        if(actionBar!=null) {
+        if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Avaliações");
@@ -155,8 +156,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
     }
 
 
-
-    public void getAccounts(View view){
+    public void getAccounts(View view) {
         mAccountManager.getAuthTokenByFeatures(Config.ACCOUNT_TYPE,
                 Config.ACCOUNT_TOKEN_TYPE,
                 null,
@@ -192,7 +192,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
                 null);
     }
 
-    public void carregaDisciplinaCursada(String email){
+    public void carregaDisciplinaCursada(String email) {
         pDialog = new ProgressDialog(this);
 
         Log.d("EMAIL PARAMETRO", email);
@@ -210,24 +210,49 @@ public class AvaliacaoActivity extends AppCompatActivity{
                     public void onResponse(JSONArray response) {
                         Log.i(TAG, "Success DISCIPLINA: " + response.toString());
 
-                        if(response.length() >0) {
+
+                        if (response.length() > 0) {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     disciplina = new Disciplina();
                                     JSONObject discJSON = (JSONObject) response.get(i);
-                                    disciplina.setCodigo(discJSON.getString("codigo"));
-                                    disciplina.setNomeDisciplina(discJSON.getString("nome"));
-                                    disciplinasList.add(disciplina);
+                                    if(!discJSON.getString("codigo").isEmpty()){
+                                        if(!discJSON.getString("nome").isEmpty()){
+                                            disciplina.setCodigo(discJSON.getString("codigo"));
+                                            disciplina.setNomeDisciplina(discJSON.getString("nome"));
+                                            disciplinasList.add(disciplina);
+                                        }
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
                             }
                             hidePDialog();
                             carregarAvaliacao();
-                        }else{
+                        }
+
+                      /*  try {
+                            if (response.length() > 0) {
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject status = (JSONObject) response.get(i);
+                                    String avaliacao = status.getString("avaliacao");
+                                    if (avaliacao.equals("feita")) {
+                                        Log.d("FEITA", avaliacao);
+                                    } else if (avaliacao.equals("sem_avaliacao")) {
+                                        Log.d("SEM AVALIACAO", avaliacao);
+                                    }
+                                }
+                            }
+
+                        }catch (JSONException e){
+
+                        }*/
+
+                        /* else {
                             Toast.makeText(AvaliacaoActivity.this, "Não há avaliações no momento. Tente novamente!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(AvaliacaoActivity.this, MainActivity.class));
-                        }
+                        }*/
 
                     }
                 },
@@ -240,13 +265,13 @@ public class AvaliacaoActivity extends AppCompatActivity{
                         hidePDialog();
                     }
                 }
-        ) ;
+        );
 
         MyApplication.getInstance().addToRequestQueue(req);
 
     }
 
-    public void carregarAvaliacao(){
+    public void carregarAvaliacao() {
         ll.setVisibility(View.VISIBLE);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Redirecionando para Avaliação...");
@@ -255,7 +280,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
         avaliacao = new Avaliacao();
 
-        JsonObjectRequest discReq = new JsonObjectRequest (Config.URL_QUESTIONARIO,
+        JsonObjectRequest discReq = new JsonObjectRequest(Config.URL_QUESTIONARIO,
                 new Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -273,8 +298,8 @@ public class AvaliacaoActivity extends AppCompatActivity{
                             JSONObject jsonOpcaoParse;
                             int pergunta_fechada = 1;
 
-                            if(jsonArrayPerguntas != null) {
-                                for(int i = 0; i < jsonArrayPerguntas.length(); i++){
+                            if (jsonArrayPerguntas != null) {
+                                for (int i = 0; i < jsonArrayPerguntas.length(); i++) {
                                     objPerguntas = jsonArrayPerguntas.getJSONObject(i);
                                     pergunta = new Pergunta();
                                     pergunta.setIdPergunta(objPerguntas.getInt("id"));
@@ -285,8 +310,8 @@ public class AvaliacaoActivity extends AppCompatActivity{
                                     JSONArray opcaoRespostaJson = objPerguntas.getJSONArray("opcoes_resposta");
 
 
-                                    if(pergunta_fechada == pergunta.getTipoPergunta()){
-                                        for(int j = 0 ; j< opcaoRespostaJson.length(); j++) {
+                                    if (pergunta_fechada == pergunta.getTipoPergunta()) {
+                                        for (int j = 0; j < opcaoRespostaJson.length(); j++) {
                                             opcaoResposta = new OpcaoResposta();
                                             jsonOpcaoParse = opcaoRespostaJson.getJSONObject(j);
                                             opcaoResposta.setIdOpcao(jsonOpcaoParse.getLong("id"));
@@ -301,20 +326,20 @@ public class AvaliacaoActivity extends AppCompatActivity{
                                 TOTAL_LIST_ITEMS = perguntas.size();
                                 avaliando(0);
 
-                            }else {
-                                Toast.makeText(AvaliacaoActivity.this, "Não há avaliações disponiveis no momento...",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(AvaliacaoActivity.this, "Não há avaliações disponiveis no momento...", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d("ERROR JSON",e.toString());
+                            Log.d("ERROR JSON", e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error Avaliacao: " + error.getMessage());
-                Toast.makeText(AvaliacaoActivity.this, "Erro ao buscar servidor...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AvaliacaoActivity.this, "Erro ao buscar servidor...", Toast.LENGTH_SHORT).show();
                 hidePDialog();
 
             }
@@ -329,121 +354,102 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
         if (posicaoDisciplina < disciplinasList.size()) {
 
-                listview = (ListView) findViewById(R.id.list);
-                btn_next = (Button) findViewById(R.id.next);
-                title = (TextView) findViewById(R.id.titlee);
-                Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-BlackItalic.ttf");
-                title.setTypeface(face);
+            listview = (ListView) findViewById(R.id.list);
+            btn_next = (Button) findViewById(R.id.next);
+            title = (TextView) findViewById(R.id.titlee);
+            Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-BlackItalic.ttf");
+            title.setTypeface(face);
 
 
-                perguntaListVolley = new ArrayList<Pergunta>();
+            perguntaListVolley = new ArrayList<Pergunta>();
 
 
-                int val = TOTAL_LIST_ITEMS % NUM_ITEMS_PAGE;
-                val = val == 0 ? 0 : 1;
-                pageCount = TOTAL_LIST_ITEMS / NUM_ITEMS_PAGE + val;
+            int val = TOTAL_LIST_ITEMS % NUM_ITEMS_PAGE;
+            val = val == 0 ? 0 : 1;
+            pageCount = TOTAL_LIST_ITEMS / NUM_ITEMS_PAGE + val;
 
-                for (int i = 0; i < TOTAL_LIST_ITEMS; i++) {
-                    perguntaListVolley.add(perguntas.get(i));
-                }
+            for (int i = 0; i < TOTAL_LIST_ITEMS; i++) {
+                perguntaListVolley.add(perguntas.get(i));
+            }
 
-                carregaLista(0, posicaoDisciplina);
+            carregaLista(0, posicaoDisciplina);
 
-                btn_next.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if(dado == true){
-                            increment++;
+            btn_next.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (dado == true) {
+                        increment++;
+                        carregaLista(increment, posicaoDisciplina);
+                        checkAtivo(posicaoDisciplina);
+                        contador = increment;
+                    } else {
+                        Toast.makeText(AvaliacaoActivity.this, "Por favor, informe sua resposta!", Toast.LENGTH_SHORT).show();
+                        if (increment == 0) {
                             carregaLista(increment, posicaoDisciplina);
-                            checkAtivo(posicaoDisciplina);
-                            contador = increment;
-                        }else{
-                            Toast.makeText(AvaliacaoActivity.this, "Por favor, informe sua resposta!", Toast.LENGTH_SHORT).show();
-                            if(increment == 0){
-                                carregaLista(increment, posicaoDisciplina);
-                            }else if(contador == increment){
-                                carregaLista(contador, posicaoDisciplina);
-                            }else{
-                                carregaLista(increment-1, posicaoDisciplina);
-                            }
-
-
+                        } else if (contador == increment) {
+                            carregaLista(contador, posicaoDisciplina);
+                        } else {
+                            carregaLista(increment - 1, posicaoDisciplina);
                         }
-                    }
-                });
 
-        }else{
+
+                    }
+                }
+            });
+
+        } else {
             btn_next.setText("Finalizar");
             btn_next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    JSONArray jsonArray = new JSONArray();
-
-                    for(int h = 0; h< respostasList.size(); h++){
-
-                        try {
-                            JSONObject json = new JSONObject();
-                            json.put("pergunta_id", String.valueOf(respostasList.get(h).getIdPerguntaRespondida()));
-                            json.put("campo_resposta", respostasList.get(h).getRespostaUsuário());
-                            json.put("avaliacao_id", String.valueOf(respostasList.get(h).getIdAvaliacao()));
-                            json.put("disciplina_id", String.valueOf(respostasList.get(h).getIdDiscplinaAvaliada()));
-                            jsonArray.put(json);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
                     try {
-                        enviarAvaliacao(jsonArray);
+                        enviarAvaliacao();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    }
+                }
 
             });
         }
     }
 
 
-    private void carregaLista(int numero, int dPosicao){
-        Log.d("Vem", "AQUI: " + dado );
+    private void carregaLista(int numero, int dPosicao) {
+        Log.d("Vem", "AQUI: " + dado);
 
 
         ArrayList<Pergunta> listPergunta = new ArrayList<>();
         ArrayList<OpcaoResposta> listOpcao = new ArrayList<>();
 
 
-        title.setText(disciplinasList.get(dPosicao).getCodigo().toString()+ ": Pergunta "+(numero+1)+" de "+ pageCount);
+        title.setText(disciplinasList.get(dPosicao).getCodigo().toString() + ": Pergunta " + (numero + 1) + " de " + pageCount);
 
 
-
-        for(int i=0; i<listOpcaoRespostas.size();i++){
+        for (int i = 0; i < listOpcaoRespostas.size(); i++) {
             listOpcao.add(listOpcaoRespostas.get(i));
         }
 
         int comece = numero * NUM_ITEMS_PAGE;
-        for(int i=comece;i<(comece)+NUM_ITEMS_PAGE;i++){
-            if(i<perguntaListVolley.size()){
+        for (int i = comece; i < (comece) + NUM_ITEMS_PAGE; i++) {
+            if (i < perguntaListVolley.size()) {
                 listPergunta.add(perguntaListVolley.get(i));
-            }else{
+            } else {
                 break;
             }
         }
         final int posicaoDisciplina = dPosicao;
 
-        avaliacaoListAdapter = new AvaliacaoListAdapter(this,listPergunta,listOpcao){
+        avaliacaoListAdapter = new AvaliacaoListAdapter(this, listPergunta, listOpcao) {
             @Override
             public void setData(boolean data, Resposta resposta) {
                 super.setData(data, resposta);
                 dado = data;
-                if(resposta != null) {
-                    if(respostasList.isEmpty()) {
+                if (resposta != null) {
+                    if (respostasList.isEmpty()) {
                         resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
                         resposta.setEmailUsurAvaliador(emailuser);
                         resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
                         respostasList.add(resposta);
-                    }else{
+                    } else {
                         if (!respostasList.contains(resposta)) {
                             resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
                             resposta.setEmailUsurAvaliador(emailuser);
@@ -451,7 +457,7 @@ public class AvaliacaoActivity extends AppCompatActivity{
                             respostasList.add(resposta);
                             Log.d("Entrou no IF: ", resposta.getIdentificador());
                         } else {
-                            Log.d("ANTES RESPOSTA",resposta.getRespostaUsuário());
+                            Log.d("ANTES RESPOSTA", resposta.getRespostaUsuário());
                             Log.d("ANTES ID", resposta.getRespostaUsuário());
                             respostasList.remove(resposta);
                             resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
@@ -471,11 +477,11 @@ public class AvaliacaoActivity extends AppCompatActivity{
     }
 
 
-    private void checkAtivo(int posicaoDisciplina){
+    private void checkAtivo(int posicaoDisciplina) {
 
-        if(increment+1 == pageCount){
+        if (increment + 1 == pageCount) {
             int tamanhoDisc = disciplinasList.size();
-            if(posicaoDisciplina < tamanhoDisc) {
+            if (posicaoDisciplina < tamanhoDisc) {
                 posicaoDisciplina++;
 
                 btn_next.setEnabled(true);
@@ -493,12 +499,10 @@ public class AvaliacaoActivity extends AppCompatActivity{
 
                 });
             }
-           // btn_prev.setEnabled(false);
-        }
-        else if(increment == 0){
-           // btn_prev.setEnabled(false);
-        }
-        else{
+            // btn_prev.setEnabled(false);
+        } else if (increment == 0) {
+            // btn_prev.setEnabled(false);
+        } else {
             //btn_prev.setEnabled(false);
             btn_next.setEnabled(true);
 
@@ -506,41 +510,72 @@ public class AvaliacaoActivity extends AppCompatActivity{
     }
 
 
-    private void enviarAvaliacao(final JSONArray jsonArray) throws JSONException {
+    private void enviarAvaliacao() throws JSONException {
 
-        JSONObject json = new JSONObject();
-        JSONArray array = new JSONArray();
-        json.putOpt("email",emailuser);
-        json.putOpt("respostas", jsonArray);
-        Log.d("Array Inicial", jsonArray.toString());
-        array.put(json);
-        //Log.d("JSONArray Respostas", array.toString());
+
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Enviando Avaliações...");
         pDialog.setCancelable(false);
         pDialog.show();
+        final JSONArray jsonArray = new JSONArray();
 
-        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST,
-                Config.RESPOSTAS_ARRAY,
-                jsonArray,
-                new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    Log.d("PERGUNTAS :"," ENVIADAS COM SUCESSO");
-                    pDialog.dismiss();
 
+        for (int h = 0; h < respostasList.size(); h++) {
+
+            try {
+                JSONObject json = new JSONObject();
+                json.put("id_resposta", String.valueOf(respostasList.get(h).getIdPerguntaRespondida()));
+                json.put("campo_resposta", respostasList.get(h).getRespostaUsuário());
+                json.put("id_avaliacao", String.valueOf(respostasList.get(h).getIdAvaliacao()));
+                json.put("id_disciplina", String.valueOf(respostasList.get(h).getIdDiscplinaAvaliada()));
+                jsonArray.put(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        Log.d("JSON ARRAY: ", jsonArray.toString());
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,  Config.RESPOSTAS_ARRAY,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                        pDialog.dismiss();
+                        Toast.makeText(AvaliacaoActivity.this,"Avaliação enviada com sucesso!", Toast.LENGTH_LONG).show();
+                        Intent it = new Intent(AvaliacaoActivity.this, MainActivity.class);
+                        startActivityForResult(it,0);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                        pDialog.dismiss();
+                    }
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("PERGUNTAS :"," ERRO AO ENVIAR");
-                    Log.d("PERGUNTAS ERROR :",error.toString());
-                    pDialog.dismiss();
-                }
-            });
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("email", emailuser);
+                params.put("respostas",jsonArray.toString() );
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         MyApplication.getInstance().addToRequestQueue(stringRequest);
-    }
 
+    }
 }
 
 

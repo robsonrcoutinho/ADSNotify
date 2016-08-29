@@ -103,18 +103,68 @@ public class UsuarioView extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, "USER INFO: " + response.toString());
                         try {
-                            String resposta = response.getString("aluno");
-                            JSONObject jsonObject = new JSONObject(resposta);
+                            String aluno = response.getString("aluno");
+                            if( aluno.length() >0){
+                                JSONObject jsonObject = new JSONObject(aluno);
+                                String nome = jsonObject.getString("name");
+                                String email = jsonObject.getString("email");
+                                String matricula = response.getString("matricula");
 
-                            String nome = jsonObject.getString("name");
-                            String email = jsonObject.getString("email");
-                            String matricula = response.getString("matricula");
-
-                            txtNome.setText(nome);
-                            txtEmail.setText(email);
-                            txtMatricula.setText(matricula);
+                                TextView  textView = (TextView)rootView.findViewById(R.id.matricula);
+                                textView.setVisibility(View.VISIBLE);
+                                txtMatricula.setVisibility(View.VISIBLE);
+                                txtNome.setText(nome);
+                                txtEmail.setText(email);
+                                txtMatricula.setText(matricula);
+                            }
 
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        try{
+                            if(!response.getString("admin").isEmpty()){
+                                String admin = response.getString("admin");
+                                JSONObject jsonObject = new JSONObject(admin);
+                                String nome = jsonObject.getString("name");
+                                String email = jsonObject.getString("email");
+
+                                TextView  textView = (TextView)rootView.findViewById(R.id.matricula);
+                                textView.setVisibility(View.VISIBLE);
+                                textView.setText("Autorização:");
+                                txtMatricula.setVisibility(View.VISIBLE);
+
+
+                                txtNome.setText(nome);
+                                txtEmail.setText(email);
+                                txtMatricula.setText("Administrador");
+
+                            }
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        try{
+                            if(!response.getString("professor").isEmpty()){
+                                String admin = response.getString("admin");
+                                JSONObject jsonObject = new JSONObject(admin);
+                                String nome = jsonObject.getString("name");
+                                String email = jsonObject.getString("email");
+
+                                TextView  textView = (TextView)rootView.findViewById(R.id.matricula);
+                                textView.setVisibility(View.VISIBLE);
+                                textView.setText("Autorização:");
+                                txtMatricula.setVisibility(View.VISIBLE);
+
+                                txtNome.setText(nome);
+                                txtEmail.setText(email);
+                                txtMatricula.setText("Professor");
+
+
+                            }
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
 
@@ -146,7 +196,6 @@ public class UsuarioView extends Fragment {
                 }
 
                 Intent it = new Intent(getActivity(), AuthenticatorActivity.class);
-                //startActivity(new Intent(getActivity(), AuthenticatorActivity.class));
                 it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(it);
             }
@@ -156,11 +205,6 @@ public class UsuarioView extends Fragment {
             return rootView;
 
         }
-
-
-
-
-
 
     public void getAccounts(View view){
         mAccountManager.getAuthTokenByFeatures(Config.ACCOUNT_TYPE,
@@ -194,8 +238,7 @@ public class UsuarioView extends Fragment {
                 },null);
     }
 
-
-    }
+}
 
 
 

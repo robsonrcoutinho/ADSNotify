@@ -89,10 +89,12 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                         e.printStackTrace();
                     }
 
-                    Log.d(TAG, "Recebido JSON:" + msgJSON.toString());
+
 
                 }
                    adapter.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(getActivity(),"Sem Avisos",Toast.LENGTH_LONG).show();
                 }
 
                   swipeRefreshLayout.setRefreshing(false);

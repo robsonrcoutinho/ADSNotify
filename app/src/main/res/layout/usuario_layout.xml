@@ -58,6 +58,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textSize="20dp"
+            android:visibility="gone"
             android:text="Matrícula:"
             android:textStyle="bold"
             android:layout_centerInParent="true"/>
@@ -67,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:visibility="gone"
             android:textSize="16dp"
             android:textStyle="bold"
             android:layout_centerInParent="true"/>
