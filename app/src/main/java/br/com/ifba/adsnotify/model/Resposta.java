@@ -10,6 +10,15 @@ public class Resposta {
     private int idDiscplinaAvaliada;
     private int idAvaliacao;
     private String identificador;
+    private boolean flagTipoPergunta;
+
+    public boolean isFlagTipoPergunta() {
+        return flagTipoPergunta;
+    }
+
+    public void setFlagTipoPergunta(boolean flagTipoPergunta) {
+        this.flagTipoPergunta = flagTipoPergunta;
+    }
 
     public String getIdentificador() {
         return identificador;

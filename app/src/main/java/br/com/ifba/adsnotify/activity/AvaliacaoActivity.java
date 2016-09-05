@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -70,7 +71,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
 
     private ListView listview;
     private TextView title;
-    // private Button btn_prev;
     private Button btn_next;
     private ArrayList<Pergunta> perguntaListVolley;
     private AvaliacaoListAdapter avaliacaoListAdapter;
@@ -210,10 +210,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         Log.i(TAG, "Success DISCIPLINA: " + response.toString());
 
-
                         if (response.length() > 0) {
+
+                            try {
                             for (int i = 0; i < response.length(); i++) {
-                                try {
                                     disciplina = new Disciplina();
                                     JSONObject discJSON = (JSONObject) response.get(i);
                                     if(!discJSON.getString("codigo").isEmpty()){
@@ -223,43 +223,24 @@ public class AvaliacaoActivity extends AppCompatActivity {
                                             disciplinasList.add(disciplina);
                                         }
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
 
                             }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                             hidePDialog();
                             carregarAvaliacao();
                         }
-
-                      /*  try {
-                            if (response.length() > 0) {
-                                for (int i = 0; i < response.length(); i++) {
-                                    JSONObject status = (JSONObject) response.get(i);
-                                    String avaliacao = status.getString("avaliacao");
-                                    if (avaliacao.equals("feita")) {
-                                        Log.d("FEITA", avaliacao);
-                                    } else if (avaliacao.equals("sem_avaliacao")) {
-                                        Log.d("SEM AVALIACAO", avaliacao);
-                                    }
-                                }
-                            }
-
-                        }catch (JSONException e){
-
-                        }*/
-
-                        /* else {
-                            Toast.makeText(AvaliacaoActivity.this, "Não há avaliações no momento. Tente novamente!", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(AvaliacaoActivity.this, MainActivity.class));
-                        }*/
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(AvaliacaoActivity.this, "Sem conexão!", Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(AvaliacaoActivity.this, "Não há avaliações ou Perfil não Aluno!", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                         startActivity(new Intent(AvaliacaoActivity.this, MainActivity.class));
                         Log.d("Erro DISCIPLINA", error.toString());
                         hidePDialog();
@@ -326,8 +307,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
                                 TOTAL_LIST_ITEMS = perguntas.size();
                                 avaliando(0);
 
-                            } else {
-                                Toast.makeText(AvaliacaoActivity.this, "Não há avaliações disponiveis no momento...", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -499,11 +478,11 @@ public class AvaliacaoActivity extends AppCompatActivity {
 
                 });
             }
-            // btn_prev.setEnabled(false);
+
         } else if (increment == 0) {
-            // btn_prev.setEnabled(false);
+
         } else {
-            //btn_prev.setEnabled(false);
+
             btn_next.setEnabled(true);
 
         }

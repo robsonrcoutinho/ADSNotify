@@ -79,6 +79,7 @@ public class ProfessorActivity extends AppCompatActivity {
             image.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    image.setVisibility(View.GONE);
                     carregaProfessor();
                     Log.d("Disciplina", "onTouch image");
                     return false;

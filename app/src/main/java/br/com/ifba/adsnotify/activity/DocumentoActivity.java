@@ -81,6 +81,7 @@ public class DocumentoActivity extends AppCompatActivity {
             image.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    image.setVisibility(View.GONE);
                     carregaDocumento();
                     Log.d("Disciplina", "onTouch image");
                     return false;

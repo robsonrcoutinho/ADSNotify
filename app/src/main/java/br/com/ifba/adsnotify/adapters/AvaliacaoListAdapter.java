@@ -2,11 +2,19 @@ package br.com.ifba.adsnotify.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.inputmethodservice.Keyboard;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -37,6 +45,7 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     private RadioGroup radioGroup;
     private EditText editText;
     private Context context;
+    Button llAvaliacao;
 
 
 
@@ -45,6 +54,7 @@ public class AvaliacaoListAdapter extends BaseAdapter {
         this.activity = activity;
         this.perguntas = perguntas;
         this.listOpcaoRespostas = listOpcaoRespostas;
+
     }
 
     @Override
@@ -91,22 +101,48 @@ public class AvaliacaoListAdapter extends BaseAdapter {
         Log.d("TIPO PERGUNTA", String.valueOf(tipoPergunta));
 
 
+
+        llAvaliacao = (Button)activity.findViewById(R.id.next);
         if (pergunta.getTipoPergunta() == PERGUNTA_ABERTA) {
             editText= (EditText)convertView.findViewById(R.id.editDinamico);
             editText.setVisibility(View.VISIBLE);
+            editText.setFocusable(true);
 
-            if(editText.length() == 0){
-                setData(false,null);
-            }else{
-                Resposta resposta = new Resposta();
-                resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
-                resposta.setRespostaUsuário(editText.getText().toString());
-                resposta.setIdentificador(String.valueOf(resposta.hashCode()));
+
+            final InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+
+            editText.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                        llAvaliacao.setVisibility(View.GONE);
+                        return false;
+                }
+            });
+
+            Resposta resposta = new Resposta();
+            resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
+            resposta.setRespostaUsuário(editText.getText().toString());
+            resposta.setIdentificador(String.valueOf(resposta.hashCode()));
+            Log.d("Resposta Aberta: ", resposta.getRespostaUsuário());
+
+
+            if(resposta.getRespostaUsuário().isEmpty() || resposta.getRespostaUsuário() == null){
+                resposta.setFlagTipoPergunta(false);
+                setData(false, resposta);
+            }else {
+                int vis = llAvaliacao.getVisibility();
+                if(vis == 8){
+                    llAvaliacao.setVisibility(View.VISIBLE);
+                }
+                llAvaliacao.setVisibility(View.VISIBLE);
+                resposta.setFlagTipoPergunta(true);
                 setData(true, resposta);
             }
 
-
         }
+
 
 
         radioGroup = new RadioGroup(context);

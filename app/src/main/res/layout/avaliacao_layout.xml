@@ -43,16 +43,11 @@
             android:fadingEdge="none"/>
 
         <LinearLayout
+            android:id="@+id/llAvaliacao"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-           <!-- <Button
-                android:id="@+id/prev"
-                android:text="Anterior"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/> -->
 
             <Button
                 android:id="@+id/next"

@@ -57,13 +57,20 @@ public class ListAvisoAdapter extends BaseAdapter {
 
 
         Typeface face = Typeface.createFromAsset(context.getAssets(), "Roboto-BlackItalic.ttf");
-        TextView titulo = (TextView)layout.findViewById(R.id.title);
+        TextView titulo = (TextView)layout.findViewById(R.id.titleAviso);
         titulo.setText(data.getAvisoTitle());
         titulo.setTypeface(face);
 
+        Typeface dataFace = Typeface.createFromAsset(context.getAssets(), "Roboto-MediumItalic.ttf");
+        TextView dataTv = (TextView)layout.findViewById(R.id.dataAviso);
+        dataTv.setText("Data: "+data.getCreateAviso());
+        dataTv.setTypeface(dataFace);
+        dataTv.setTextSize(10);
+
         Typeface face2 = Typeface.createFromAsset(context.getAssets(), "Roboto-MediumItalic.ttf");
         TextView descricao = (TextView)layout.findViewById(R.id.description);
-        descricao.setText(data.getAvisoBody());
+        descricao.setText("     "  + data.getAvisoBody());
+        descricao.setTextSize(15);
         descricao.setTypeface(face2);
 
         return layout;

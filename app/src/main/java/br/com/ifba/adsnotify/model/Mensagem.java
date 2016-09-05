@@ -9,8 +9,16 @@ public class Mensagem implements Serializable{
 
     private String avisoTitle;
     private String avisoBody;
+    private String createAviso;
 
 
+    public String getCreateAviso() {
+        return createAviso;
+    }
+
+    public void setCreateAviso(String createAviso) {
+        this.createAviso = createAviso;
+    }
 
     public String getAvisoTitle() {
         return avisoTitle;

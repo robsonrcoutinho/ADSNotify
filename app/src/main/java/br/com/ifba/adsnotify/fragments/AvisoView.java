@@ -4,10 +4,12 @@ package br.com.ifba.adsnotify.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -83,21 +85,22 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                         msgJSON = (JSONObject) response.get(i);
                         String titulo = msgJSON.getString("titulo");
                         String mensg = msgJSON.getString("mensagem");
-                        iniciaLista(titulo, mensg);
+                        String create = msgJSON.getString("updated_at");
+                        iniciaLista(titulo, mensg, create);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-
-
                 }
                    adapter.notifyDataSetChanged();
                 }else{
-                    Toast.makeText(getActivity(),"Sem Avisos",Toast.LENGTH_LONG).show();
+                    TextView tv = (TextView) rootView.findViewById(R.id.titleAviso);
+                    tv.setText("Sem Novos Avisos!");
+                    swipeRefreshLayout.setRefreshing(true);
                 }
 
-                  swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
 
             }
         }, new Response.ErrorListener() {
@@ -105,7 +108,8 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
             @Override
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
-              //  Toast.makeText(getActivity(), "Sem conexão!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Verifique sua conexão!",Toast.LENGTH_LONG).show();
+
             }
         });
         MyApplication.getInstance().addToRequestQueue(req);
@@ -114,10 +118,11 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
 
 
-    public void iniciaLista(String titulo, String corpo){
+    public void iniciaLista(String titulo, String corpo, String data){
         mensagem = new Mensagem();
         mensagem.setAvisoTitle(titulo);
         mensagem.setAvisoBody(corpo);
+        mensagem.setCreateAviso(data);
         list.add(mensagem);
     }
 

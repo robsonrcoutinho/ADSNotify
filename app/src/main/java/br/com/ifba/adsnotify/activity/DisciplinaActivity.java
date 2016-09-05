@@ -1,6 +1,7 @@
 package br.com.ifba.adsnotify.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -84,6 +85,7 @@ public class DisciplinaActivity extends AppCompatActivity {
             image.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    image.setVisibility(View.GONE);
                     carregaDisciplina();
                     Log.d("Disciplina", "onTouch image");
                     return false;
@@ -136,6 +138,7 @@ public class DisciplinaActivity extends AppCompatActivity {
                 Toast.makeText(DisciplinaActivity.this,
                         "Erro ao tentar conectar! Verifique sua conexão",
                         Toast.LENGTH_LONG).show();
+               // startActivity(new Intent(DisciplinaActivity.this, MainActivity.class));
                 image.setVisibility(View.VISIBLE);
 
             }

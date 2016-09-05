@@ -25,9 +25,9 @@
         <EditText
             android:id="@+id/editDinamico"
             android:layout_width="fill_parent"
+            android:background="@drawable/edittext_bg"
             android:layout_height="fill_parent"
-            android:visibility="gone"/>
-
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
