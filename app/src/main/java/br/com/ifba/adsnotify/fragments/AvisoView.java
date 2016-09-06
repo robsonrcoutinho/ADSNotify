@@ -4,14 +4,11 @@ package br.com.ifba.adsnotify.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.TextViewCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -21,7 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
-import br.com.ifba.adsnotify.adapters.ListAvisoAdapter;
+import br.com.ifba.adsnotify.adapters.AvisoListAdapter;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.gcm.NotificationUtils;
@@ -29,13 +26,20 @@ import br.com.ifba.adsnotify.helper.MyPreferenceManager;
 import br.com.ifba.adsnotify.model.Mensagem;
 import se.emilsjolander.flipview.FlipView;
 
+/**
+ * Classe responsavel pela apresentação de avisos
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 10/05/2016.
+ */
+
 public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = AvisoView.class.getSimpleName();
     private Mensagem mensagem;
     private List<Mensagem> list;
     private LayoutInflater inflater;
     private View rootView;
-    private ListAvisoAdapter adapter;
+    private AvisoListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
 
@@ -56,7 +60,7 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
         FlipView flipView = (FlipView)rootView.findViewById(R.id.flip_view);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
-        adapter = new ListAvisoAdapter(getActivity().getApplicationContext(), list);
+        adapter = new AvisoListAdapter(getActivity().getApplicationContext(), list);
         flipView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);

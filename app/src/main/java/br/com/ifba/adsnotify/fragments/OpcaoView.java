@@ -1,6 +1,5 @@
 package br.com.ifba.adsnotify.fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,17 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.RecyclerViewAdapter;
 import br.com.ifba.adsnotify.model.ItemObjectMenu;
 
-
 /**
- * Created by Robson on 22/04/2016.
+ * Classe responsavel pela geraçao das opções do menu
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 22/04/2016.
  */
 
 public class OpcaoView extends Fragment {

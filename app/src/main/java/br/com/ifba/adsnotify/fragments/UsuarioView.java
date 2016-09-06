@@ -1,6 +1,5 @@
 package br.com.ifba.adsnotify.fragments;
 
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -32,8 +31,12 @@ import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.User;
 
+
 /**
- * Created by Robson on 22/04/2016.
+ * Classe responsavel por mostrar informações de usuário
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 22/04/2016.
  */
 public class UsuarioView extends Fragment {
     private static final String TAG = UsuarioView.class.getSimpleName();

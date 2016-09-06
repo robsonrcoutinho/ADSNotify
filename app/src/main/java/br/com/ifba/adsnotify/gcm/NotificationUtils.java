@@ -18,7 +18,6 @@ import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Patterns;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -28,21 +27,19 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
-
-/**
- * Created by Robson on 10/05/2016.
- */
 
 /*
 * Essa classe é usada para mostrar a notificação
 * na bandeja de notificação. Este também contém as principais
 * funções como verificar estado de execução do aplicativo (background/primeiro plano)
 * download de imagem em anexo notificação da url, jogando som de notificação e limpar mensagens de notificação.
-*/
+* @Author Robson Coutinho
+ * @version 1.0
+ * @since 10/05/2016.
+ */
 public class NotificationUtils{
 
     private static String TAG = NotificationUtils.class.getSimpleName();

@@ -1,13 +1,10 @@
 package br.com.ifba.adsnotify.app;
 
 import android.app.Application;
-import android.content.Intent;
 import android.text.TextUtils;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-
 import br.com.ifba.adsnotify.helper.MyPreferenceManager;
 import br.com.ifba.adsnotify.model.User;
 
@@ -15,9 +12,13 @@ import br.com.ifba.adsnotify.model.User;
  * Created by Robson on 10/05/2016.
  */
 
-/*
-* Classe base para manter o estado de aplicação global - Context Application
-* */
+/**
+ * Classe base para manter o estado de aplicação global - Context Application
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 10/05/2016.
+ */
+
 public class MyApplication extends Application {
     private User user;
 

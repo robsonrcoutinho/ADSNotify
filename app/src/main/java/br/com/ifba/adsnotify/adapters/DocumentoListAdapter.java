@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
-import br.com.ifba.adsnotify.model.Disciplina;
 import br.com.ifba.adsnotify.model.Documento;
 
 /**
- * Created by Robson on 27/05/2016.
+ * Classe adapter usada para mostragem de Documentos na view
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 27/05/2016.
  */
 public class DocumentoListAdapter extends BaseAdapter {
     private static final String TAG = DocumentoListAdapter.class.getSimpleName();

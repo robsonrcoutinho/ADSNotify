@@ -30,7 +30,10 @@ import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.User;
 
 /**
- * Created by Robson on 02/06/2016.
+ * Classe usada na autenticação do usuario com o aplicativo
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 02/06/2016.
  */
 public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     public static final String TAG = "AuthenticatorActivity";
@@ -65,7 +68,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     }
 
 
-    // UTIL
+    /*
+    * Metodo usado para iniciação de elementos gráficos do aplicativo
+    * */
     public void accessViews() {
         Log.i(TAG, ".accessViews()");
         //===
@@ -102,7 +107,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
      * Metodo responsavel por consultar webservice e verificar se usuario existe e logar no app
      *
      **/
-
     public void signInLocal() {
         Log.i(TAG, ".signInLocal()");
 
@@ -162,6 +166,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 
     }
 
+    /*
+    * Metodo para fazer tratamento das informações repassadas pelo servidos
+    * Se a autenticação estiver correta, usuário será encaminhado para MainActivity.
+    * */
     public void finish(Intent it) {
         Log.i(TAG, ".finish()");
         String accountType = it.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE);
@@ -201,6 +209,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         btnSignLocal.setEnabled(true);
     }
 
+    /*
+    * Metodo usado para validação de campos de email e senha
+    * */
     public boolean validate() {
         boolean valid = true;
 

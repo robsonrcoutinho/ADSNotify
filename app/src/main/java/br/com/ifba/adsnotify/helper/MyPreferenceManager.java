@@ -3,16 +3,15 @@ package br.com.ifba.adsnotify.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import br.com.ifba.adsnotify.model.User;
 
-/**
- * Created by Robson on 10/05/2016.
- */
 
 /**Esta classe armazena dados em SharedPreferences .
  * Aqui nós armazenamos temporariamente as notificações push não lidas
-  */
+* @Author Robson Coutinho
+* @version 1.0
+* @since 10/05/2016.
+*/
 
 public class MyPreferenceManager{
     private String TAG = MyPreferenceManager.class.getSimpleName();

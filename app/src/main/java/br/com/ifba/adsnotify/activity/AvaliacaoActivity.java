@@ -56,8 +56,12 @@ import br.com.ifba.adsnotify.model.User;
 
 
 /**
- * Created by Robson on 18/05/2016.
+ * Classe para realização de avaliações através do aplicativo
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 018/05/2016.
  */
+
 public class AvaliacaoActivity extends AppCompatActivity {
     private static String TAG = AvaliacaoActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -155,7 +159,9 @@ public class AvaliacaoActivity extends AppCompatActivity {
         }
     }
 
-
+    /*
+    * Metodo usadado para obter uma conta do AccountManager Android
+    * */
     public void getAccounts(View view) {
         mAccountManager.getAuthTokenByFeatures(Config.ACCOUNT_TYPE,
                 Config.ACCOUNT_TOKEN_TYPE,
@@ -192,6 +198,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
                 null);
     }
 
+    /*
+    * Metodo usado para buscar disciplinas cursadas pelo usuário
+    * @param email String - consultar perfil e buscar disciplinas vinculadas
+    * */
     public void carregaDisciplinaCursada(String email) {
         pDialog = new ProgressDialog(this);
 
@@ -252,6 +262,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
 
     }
 
+    /*
+    * Metodo será chamado assim que @carregaDisciplinaCursada(String email) for processada
+    * metodo carrega as perguntas cadastradas para usuários
+    * */
     public void carregarAvaliacao() {
         ll.setVisibility(View.VISIBLE);
         pDialog = new ProgressDialog(this);
@@ -326,7 +340,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
         MyApplication.getInstance().addToRequestQueue(discReq);
     }
 
-
+    /*
+    *Metodo que faz uma paginação dinâmica das perguntas e disciplinas
+    * Tendo um botão que permite que o usuario navegue por todas as perguntas cadastradas, respondendo-as
+    * */
     public void avaliando(final int posicaoDisciplina) {
 
         Log.d("Passando aqui", String.valueOf(posicaoDisciplina));
@@ -392,6 +409,9 @@ public class AvaliacaoActivity extends AppCompatActivity {
     }
 
 
+    /*
+    * Metodo que carrega a lista de perguntas da avaliação e carrega na view
+    * */
     private void carregaLista(int numero, int dPosicao) {
         Log.d("Vem", "AQUI: " + dado);
 
@@ -417,6 +437,11 @@ public class AvaliacaoActivity extends AppCompatActivity {
         }
         final int posicaoDisciplina = dPosicao;
 
+        /*
+        * A lista de perguntas é passada para o adaptador e a resposta é repassada dinamicamente
+        * Esse metodo tem como função, passar uma lista de Perguntas e pegar as resposta dessas perguntas
+        * dinamicamente
+        * */
         avaliacaoListAdapter = new AvaliacaoListAdapter(this, listPergunta, listOpcao) {
             @Override
             public void setData(boolean data, Resposta resposta) {
@@ -456,6 +481,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
     }
 
 
+    /*
+    * Metodo usado para fazer a checagem do numero de perguntas na lista
+    * e mudar o numero de perguntas através de incremento
+    * */
     private void checkAtivo(int posicaoDisciplina) {
 
         if (increment + 1 == pageCount) {
@@ -488,16 +517,16 @@ public class AvaliacaoActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    * Metodo resposavel por pegar a lista de respostas dadas pelo usuário e enviar para servidor
+    * */
 
     private void enviarAvaliacao() throws JSONException {
-
-
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Enviando Avaliações...");
         pDialog.setCancelable(false);
         pDialog.show();
         final JSONArray jsonArray = new JSONArray();
-
 
         for (int h = 0; h < respostasList.size(); h++) {
 
@@ -512,10 +541,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-
-        Log.d("JSON ARRAY: ", jsonArray.toString());
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,  Config.RESPOSTAS_ARRAY,
                 new Response.Listener<String>()

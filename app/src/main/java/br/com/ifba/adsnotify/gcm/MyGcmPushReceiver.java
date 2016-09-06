@@ -7,16 +7,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
-
 import br.com.ifba.adsnotify.activity.MainActivity;
 import br.com.ifba.adsnotify.app.Config;
-/**
- * Created by Robson on 10/05/2016.
- */
 
-/*
-*  Esta é uma classe receiver em que o método onMessageReceived() será acionado sempre que dispositivo recebe nova notificação push.
-* */
+/**
+ *Esta é uma classe receiver em que o método onMessageReceived() será acionado sempre que dispositivo recebe nova notificação push.
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 10/05/2016.
+ */
 public class MyGcmPushReceiver extends GcmListenerService {
     private static final String TAG = MyGcmPushReceiver.class.getSimpleName();
 

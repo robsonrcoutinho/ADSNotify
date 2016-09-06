@@ -1,12 +1,15 @@
 package br.com.ifba.adsnotify.gcm;
+
 import android.content.Intent;
 import android.util.Log;
-
 import com.google.android.gms.iid.InstanceIDListenerService;
 
-/*
-* Este serviço invoca onTokenRefresh () método verifica se há uma mudança na GCM token de registro .
-* */
+/**
+ *Este serviço invoca onTokenRefresh () método verifica se há uma mudança na GCM token de registro .
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 10/05/2016.
+ */
 public class MyInstanceIDListenerService extends InstanceIDListenerService {
 
     private static final String TAG = MyInstanceIDListenerService.class.getSimpleName();

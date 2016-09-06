@@ -5,15 +5,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.model.ItemObjectMenu;
 
 /**
- * Created by Robson on 24/04/2016.
+ * Classe RecyclerView usada para criação do Menu
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since  24/04/2016.
  */
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolders> {
 
     private List<ItemObjectMenu> itemList;

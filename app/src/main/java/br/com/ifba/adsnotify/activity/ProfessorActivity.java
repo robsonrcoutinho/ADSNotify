@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -33,7 +32,10 @@ import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.Professor;
 
 /**
- * Created by Robson on 19/05/2016.
+ * Classe principal da aplicação, ela fará a montagem da estrutura geral do app
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 19/05/2016.
  */
 public class ProfessorActivity extends AppCompatActivity {
     private static final String TAG = ProfessorActivity.class.getSimpleName();

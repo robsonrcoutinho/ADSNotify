@@ -9,12 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.model.User;
 
+
 /**
- * Created by Robson on 15/07/2016.
+ * Classe cadastrar usuário da aplicação
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 15/07/2016.
  */
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";

@@ -1,12 +1,12 @@
 package br.com.ifba.adsnotify.app;
 
 /**
- * Created by Robson on 10/05/2016.
+ * Esta classe contém informações de configuração do app relacionado com GCM.
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 10/05/2016.
  */
 
-/*
-* Esta classe contém informações de configuração do app relacionado com GCM.
-* */
 public class Config {
     // Flag para identificar se mostra uma única linha
     // Ou múltiplas linhas de texto na bandeja de notificação push

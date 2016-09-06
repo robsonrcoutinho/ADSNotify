@@ -9,16 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.model.Disciplina;
 
 /**
- * Created by Robson on 27/05/2016.
+ * Classe adapter usada para mostragem de disciplinas na view
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 27/05/2016.
  */
+
 public class DisciplinaListAdapter extends BaseAdapter {
     private static final String TAG = DisciplinaListAdapter.class.getSimpleName();
     private Activity activity;
@@ -67,6 +68,9 @@ public class DisciplinaListAdapter extends BaseAdapter {
         cargaHoraria.setText(disciplina.getCargaHoraria());
         codigo.setText(disciplina.getCodigo());
 
+        /*
+        * URL da ementa é jogada em um evento de click, onde o browser do dispositivo mobile será chamado
+        * */
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

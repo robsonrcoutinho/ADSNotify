@@ -1,7 +1,6 @@
 package br.com.ifba.adsnotify.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -17,19 +16,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.DisciplinaListAdapter;
 import br.com.ifba.adsnotify.app.Config;
@@ -37,7 +32,10 @@ import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.Disciplina;
 
 /**
- * Created by Robson on 19/05/2016.
+ * Classe usada para buscar e mostrar visualização de todas as disciplinas do curso
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 19/05/2016.
  */
 public class DisciplinaActivity extends AppCompatActivity {
     private static final String TAG = DisciplinaActivity.class.getSimpleName();
@@ -96,30 +94,33 @@ public class DisciplinaActivity extends AppCompatActivity {
     }
 
 
-        public void carregaDisciplina(){
-        image.setVisibility(View.GONE);
+    /*
+    * Metodo usado para fazer a solicicação de todas as disciplinas
+    * */
+    public void carregaDisciplina(){
+    image.setVisibility(View.GONE);
 
-        pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Carregando Disciplinas...");
-        pDialog.setCancelable(false);
-        pDialog.show();
+    pDialog = new ProgressDialog(this);
+    pDialog.setMessage("Carregando Disciplinas...");
+    pDialog.setCancelable(false);
+    pDialog.show();
 
 
-        JsonArrayRequest discReq = new JsonArrayRequest(Config.URL_DISCIPLINAS,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-                        hidePDialog();
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
+    JsonArrayRequest discReq = new JsonArrayRequest(Config.URL_DISCIPLINAS,
+            new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    Log.d(TAG, response.toString());
+                    hidePDialog();
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
 
-                                JSONObject obj = response.getJSONObject(i);
-                                Disciplina disc = new Disciplina();
-                                disc.setNomeDisciplina(obj.getString("nome"));
-                                disc.setCargaHoraria(obj.getString("carga_horaria") + " Horas");
-                                disc.setCodigo(obj.getString("codigo"));
-                                disc.setEmenta(obj.getString("ementa"));
+                            JSONObject obj = response.getJSONObject(i);
+                            Disciplina disc = new Disciplina();
+                            disc.setNomeDisciplina(obj.getString("nome"));
+                            disc.setCargaHoraria(obj.getString("carga_horaria") + " Horas");
+                            disc.setCodigo(obj.getString("codigo"));
+                            disc.setEmenta(obj.getString("ementa"));
 
                                 discList.add(disc);
 

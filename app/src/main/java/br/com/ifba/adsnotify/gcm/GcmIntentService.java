@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,14 +15,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.EndPoints;

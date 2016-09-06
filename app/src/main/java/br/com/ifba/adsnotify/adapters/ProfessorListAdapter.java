@@ -14,7 +14,10 @@ import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.model.Professor;
 
 /**
- * Created by Robson on 27/05/2016.
+ * Classe adapter usada para mostragem de Professores na view
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 27/05/2016.
  */
 public class ProfessorListAdapter extends BaseAdapter {
     private static final String TAG = ProfessorListAdapter.class.getSimpleName();

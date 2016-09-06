@@ -16,19 +16,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.DocumentoListAdapter;
 import br.com.ifba.adsnotify.app.Config;
@@ -36,8 +32,12 @@ import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.Documento;
 
 /**
- * Created by Robson on 19/05/2016.
+ * Classe usada para buscar e mostrar visualização de todos os documentos do curso
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 19/05/2016.
  */
+
 public class DocumentoActivity extends AppCompatActivity {
     private static final String TAG = DocumentoActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -92,6 +92,9 @@ public class DocumentoActivity extends AppCompatActivity {
 
 
     }
+    /*
+    * Metodo usado para solicitar lista de documetnos online
+    * */
     public void carregaDocumento(){
         image.setVisibility(View.GONE);
 

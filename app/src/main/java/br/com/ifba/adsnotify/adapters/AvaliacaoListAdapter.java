@@ -2,16 +2,11 @@ package br.com.ifba.adsnotify.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.inputmethodservice.Keyboard;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -29,8 +24,12 @@ import br.com.ifba.adsnotify.model.Pergunta;
 import br.com.ifba.adsnotify.model.Resposta;
 
 /**
- * Created by Robson on 27/05/2016.
+ * Classe adapter usada para mostragem de avaliação na view
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 27/05/2016.
  */
+
 public class AvaliacaoListAdapter extends BaseAdapter {
     private static final String TAG = AvaliacaoListAdapter.class.getSimpleName();
     private Activity activity;
@@ -46,8 +45,6 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     private EditText editText;
     private Context context;
     Button llAvaliacao;
-
-
 
     public AvaliacaoListAdapter(Activity activity, List<Pergunta> perguntas,
                                 List<OpcaoResposta> listOpcaoRespostas) {
@@ -102,15 +99,17 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
 
 
+        /*
+        * Condicional que verifica se pergunta é aberta,
+        * se for, gero um EditText para a pergunta e aguardo resposta dada pelo usuário
+        * */
         llAvaliacao = (Button)activity.findViewById(R.id.next);
         if (pergunta.getTipoPergunta() == PERGUNTA_ABERTA) {
             editText= (EditText)convertView.findViewById(R.id.editDinamico);
             editText.setVisibility(View.VISIBLE);
             editText.setFocusable(true);
 
-
             final InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
 
             editText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -143,13 +142,15 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
         }
 
-
-
         radioGroup = new RadioGroup(context);
         radioGroup.setOrientation(LinearLayout.VERTICAL);
 
         listRadioButtons = new ArrayList<>();
 
+        /*
+        * Se pergunta for fechada, geração de RadioButtons dinamicamente, associando pergunta e
+        * suas respostas
+        * */
         if (listOpcaoRespostas != null) {
 
             for (int i = 0; i < listOpcaoRespostas.size(); i++) {
@@ -201,6 +202,10 @@ public class AvaliacaoListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /*
+    * Metodo usada para passagem de parametros para @AvaliacaoActivity
+    * Passa respostas em tempo de execuução
+    * */
     public void setData(boolean data, Resposta resposta) {
     }
 

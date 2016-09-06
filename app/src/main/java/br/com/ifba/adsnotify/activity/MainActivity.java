@@ -17,19 +17,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.app.MyApplication;
@@ -37,11 +33,13 @@ import br.com.ifba.adsnotify.fragments.AvisoView;
 import br.com.ifba.adsnotify.fragments.OpcaoView;
 import br.com.ifba.adsnotify.fragments.UsuarioView;
 import br.com.ifba.adsnotify.gcm.GcmIntentService;
-import br.com.ifba.adsnotify.gcm.NotificationUtils;
 import br.com.ifba.adsnotify.model.User;
 
 /**
- * Created by Robson on 22/04/2016.
+ * Classe principal da aplicação, ela fará a montagem da estrutura geral do app
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 22/04/2016.
  */
 public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
@@ -67,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        //*
+        // Metodo usado pelo GCM para gerenciar tokens de Push
+        // */
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -107,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
+    //*
+    // Metodo para criação das tabs do menu principal da aplicaçõa
+    // */
     private void setupTabIcons() {
         int[] tabIcons = {
                 R.drawable.tab_home,
@@ -119,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
+    /*
+    * Metodo usado para criar instancia de cada fragmento responsavel pelos tabLayouts
+    * */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new AvisoView(), "AvisoView");
@@ -211,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /*
+    * Metodo usado para verificar se existe uma conta cadastrada no app
+    * */
     public void getAccounts(View view){
         mAccountManager.getAuthTokenByFeatures(Config.ACCOUNT_TYPE,
                 Config.ACCOUNT_TOKEN_TYPE,

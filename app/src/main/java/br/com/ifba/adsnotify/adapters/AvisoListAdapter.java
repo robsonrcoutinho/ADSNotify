@@ -13,16 +13,20 @@ import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.model.Mensagem;
 
 /**
- * Created by Robson on 24/04/2016.
+ * Classe adapter usada para mostragem de avisos na view
+ * @Author Robson Coutinho
+ * @version 1.0
+ * @since 27/05/2016.
  */
-public class ListAvisoAdapter extends BaseAdapter {
+
+public class AvisoListAdapter extends BaseAdapter {
 
     private Context context;
     private List<Mensagem> avisosList;
     private LayoutInflater inflater;
     private int repeatCount = 1;
 
-    public ListAvisoAdapter(Context context,List<Mensagem> avisos) {
+    public AvisoListAdapter(Context context, List<Mensagem> avisos) {
         this.context=context;
         inflater = LayoutInflater.from(context);
         this.avisosList = avisos;
