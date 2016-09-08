@@ -26,6 +26,9 @@ public class Config {
     public static final String INFO_USER = "https://adsprojectifba.herokuapp.com/api/informacaoUser";
     public static final String RESPOSTAS_ARRAY = "https://adsprojectifba.herokuapp.com/api/respostaQuestionario";
 
+    public static final String ROOT_DOC = "https://adsprojectifba.herokuapp.com/";
+
+
 
     // broadcast receiver intent filters
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";

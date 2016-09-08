@@ -63,24 +63,9 @@ public class DocumentoListAdapter extends BaseAdapter {
 
         Documento doc = docs.get(position);
 
-        switch (position){
-            case 0:
-                image.setImageResource(R.drawable.calendario);
-                break;
-            case 1:
-                image.setImageResource(R.drawable.grade);
-                break;
-            case 2:
-                image.setImageResource(R.drawable.horario);
-                break;
 
-            case 3:
-                image.setImageResource(R.drawable.normas);
-                break;
-            case 4:
-                image.setImageResource(R.drawable.projeto);
-                break;
-        }
+        image.setImageResource(R.drawable.documento);
+
 
         tituto.setText(doc.getTitulo());
 
