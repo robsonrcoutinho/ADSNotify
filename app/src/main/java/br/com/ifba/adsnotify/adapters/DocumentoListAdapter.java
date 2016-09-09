@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
+import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.model.Documento;
 
 /**
@@ -74,7 +75,10 @@ public class DocumentoListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String URLdoc = docs.get(position).getUrl();
+
+                String URLdoc = Config.ROOT_DOC;
+                URLdoc+=docs.get(position).getUrl();
+
                 intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse(URLdoc),
                         "text/html");
