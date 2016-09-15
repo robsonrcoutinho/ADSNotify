@@ -129,7 +129,7 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
             if(resposta.getRespostaUsuário().isEmpty() || resposta.getRespostaUsuário() == null){
                 resposta.setFlagTipoPergunta(false);
-                setData(false, resposta);
+                setData(false, null);
             }else {
                 int vis = llAvaliacao.getVisibility();
                 if(vis == 8){
