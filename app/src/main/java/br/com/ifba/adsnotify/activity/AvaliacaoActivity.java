@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.OperationCanceledException;
 import android.support.v4.app.NavUtils;
@@ -93,6 +94,8 @@ public class AvaliacaoActivity extends AppCompatActivity {
     private LinearLayout ll;
     private List<Resposta> respostasList = new ArrayList<>();
 
+    private Resposta respostaFixa;
+    private int disciplinaFixa;
 
     @Override
     protected void onCreate(Bundle savedinstanceState) {
@@ -407,18 +410,14 @@ public class AvaliacaoActivity extends AppCompatActivity {
             });
         }
     }
-
-
     /*
     * Metodo que carrega a lista de perguntas da avaliação e carrega na view
     * */
     private void carregaLista(int numero, int dPosicao) {
         Log.d("Vem", "AQUI: " + dado);
 
-
         ArrayList<Pergunta> listPergunta = new ArrayList<>();
         ArrayList<OpcaoResposta> listOpcao = new ArrayList<>();
-
 
         title.setText(disciplinasList.get(dPosicao).getCodigo().toString() + ": Pergunta " + (numero + 1) + " de " + pageCount);
 
@@ -450,13 +449,11 @@ public class AvaliacaoActivity extends AppCompatActivity {
                 if (resposta != null) {
                     if (respostasList.isEmpty()) {
                         resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
-                        resposta.setEmailUsurAvaliador(emailuser);
                         resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
                         respostasList.add(resposta);
                     } else {
                         if (!respostasList.contains(resposta)) {
                             resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
-                            resposta.setEmailUsurAvaliador(emailuser);
                             resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
                             respostasList.add(resposta);
                             Log.d("Entrou no IF: ", resposta.getIdentificador());
@@ -465,7 +462,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
                             Log.d("ANTES ID", resposta.getRespostaUsuário());
                             respostasList.remove(resposta);
                             resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
-                            resposta.setEmailUsurAvaliador(emailuser);
                             resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
                             respostasList.add(resposta);
 
@@ -480,13 +476,11 @@ public class AvaliacaoActivity extends AppCompatActivity {
         listview.setAdapter(avaliacaoListAdapter);
     }
 
-
     /*
     * Metodo usado para fazer a checagem do numero de perguntas na lista
     * e mudar o numero de perguntas através de incremento
     * */
     private void checkAtivo(int posicaoDisciplina) {
-
         if (increment + 1 == pageCount) {
             int tamanhoDisc = disciplinasList.size();
             if (posicaoDisciplina < tamanhoDisc) {
@@ -542,6 +536,8 @@ public class AvaliacaoActivity extends AppCompatActivity {
             }
         }
 
+        Log.d("Respostas: ",jsonArray.toString());
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST,  Config.RESPOSTAS_ARRAY,
                 new Response.Listener<String>()
                 {
@@ -549,9 +545,20 @@ public class AvaliacaoActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         pDialog.dismiss();
-                        Toast.makeText(AvaliacaoActivity.this,"Avaliação enviada com sucesso!", Toast.LENGTH_LONG).show();
-                        Intent it = new Intent(AvaliacaoActivity.this, MainActivity.class);
-                        startActivityForResult(it,0);
+                        if(response.equals("feita")){
+                            Toast.makeText(AvaliacaoActivity.this,"Avaliação enviada com sucesso!", Toast.LENGTH_LONG).show();
+                            Intent it = new Intent(AvaliacaoActivity.this, MainActivity.class);
+                            startActivityForResult(it,0);
+                        }else  if(response.equals("sucesso")){
+                            Toast.makeText(AvaliacaoActivity.this,"Avaliação enviada com sucesso!", Toast.LENGTH_LONG).show();
+                            Intent it = new Intent(AvaliacaoActivity.this, MainActivity.class);
+                            startActivityForResult(it,0);
+                        }else if(response.equals("erro")){
+                            Toast.makeText(AvaliacaoActivity.this,"Erro! Tente novamente mais tarde!", Toast.LENGTH_LONG).show();
+                            Intent it = new Intent(AvaliacaoActivity.this, MainActivity.class);
+                            startActivityForResult(it,0);
+                        }
+
                     }
                 },
                 new Response.ErrorListener()
@@ -580,6 +587,36 @@ public class AvaliacaoActivity extends AppCompatActivity {
         MyApplication.getInstance().addToRequestQueue(stringRequest);
 
     }
+
+
+ /*   public void trataResposta(Resposta resposta, int posicaoDisciplina) {
+        Log.d("EM TratarResposta()", "LOG");
+        if (resposta != null) {
+            btn_next.setVisibility(View.VISIBLE);
+            if (respostasList.isEmpty()) {
+                resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
+                resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
+                respostasList.add(resposta);
+            } else {
+                if (!respostasList.contains(resposta)) {
+                    resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
+                    resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
+                    respostasList.add(resposta);
+                    Log.d("Não Contém R: ", resposta.getIdentificador());
+                } else {
+                    Log.d("Contém: ", resposta.getRespostaUsuário());
+                    respostasList.remove(resposta);
+                    resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
+                    resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
+                    respostasList.add(resposta);
+                    Log.d("Contém Nova: ", resposta.getRespostaUsuário());
+                    Log.d("DEPOIS RESPOSTA", resposta.getRespostaUsuário());
+                    Log.d("DEPOIS ID", resposta.getIdentificador());
+                }
+            }
+        }
+
+    }*/
 }
 
 
