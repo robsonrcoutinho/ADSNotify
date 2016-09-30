@@ -52,6 +52,7 @@
         <activity
             android:name="br.com.ifba.adsnotify.activity.AvaliacaoActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:label="AvaliacaoActivity"
             android:parentActivityName="br.com.ifba.adsnotify.activity.MainActivity" >
             <meta-data

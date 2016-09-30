@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.OperationCanceledException;
 import android.support.v4.app.NavUtils;
@@ -94,8 +93,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
     private LinearLayout ll;
     private List<Resposta> respostasList = new ArrayList<>();
 
-    private Resposta respostaFixa;
-    private int disciplinaFixa;
 
     @Override
     protected void onCreate(Bundle savedinstanceState) {
@@ -105,6 +102,7 @@ public class AvaliacaoActivity extends AppCompatActivity {
         user = ((MyApplication) getApplication()).getUser();
         mAccountManager = AccountManager.get(AvaliacaoActivity.this);
         getAccounts(null);
+        btn_next = (Button) findViewById(R.id.next);
 
         final Account[] accounts = mAccountManager.getAccountsByType(Config.ACCOUNT_TYPE);
         String[] name = new String[accounts.length];
@@ -207,8 +205,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
     * */
     public void carregaDisciplinaCursada(String email) {
         pDialog = new ProgressDialog(this);
-
-        Log.d("EMAIL PARAMETRO", email);
         paramsn.put("email", email);
 
         pDialog.setMessage("Buscando Disciplinas cursadas...");
@@ -349,12 +345,10 @@ public class AvaliacaoActivity extends AppCompatActivity {
     * */
     public void avaliando(final int posicaoDisciplina) {
 
-        Log.d("Passando aqui", String.valueOf(posicaoDisciplina));
-
         if (posicaoDisciplina < disciplinasList.size()) {
 
             listview = (ListView) findViewById(R.id.list);
-            btn_next = (Button) findViewById(R.id.next);
+
             title = (TextView) findViewById(R.id.titlee);
             Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-BlackItalic.ttf");
             title.setTypeface(face);
@@ -414,8 +408,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
     * Metodo que carrega a lista de perguntas da avaliação e carrega na view
     * */
     private void carregaLista(int numero, int dPosicao) {
-        Log.d("Vem", "AQUI: " + dado);
-
         ArrayList<Pergunta> listPergunta = new ArrayList<>();
         ArrayList<OpcaoResposta> listOpcao = new ArrayList<>();
 
@@ -456,20 +448,14 @@ public class AvaliacaoActivity extends AppCompatActivity {
                             resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
                             resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
                             respostasList.add(resposta);
-                            Log.d("Entrou no IF: ", resposta.getIdentificador());
                         } else {
-                            Log.d("ANTES RESPOSTA", resposta.getRespostaUsuário());
-                            Log.d("ANTES ID", resposta.getRespostaUsuário());
                             respostasList.remove(resposta);
                             resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
                             resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
                             respostasList.add(resposta);
-
-                            Log.d("DEPOIS RESPOSTA", resposta.getRespostaUsuário());
-                            Log.d("DEPOIS ID", resposta.getIdentificador());
-
                         }
                     }
+
                 }
             }
         };
@@ -495,13 +481,9 @@ public class AvaliacaoActivity extends AppCompatActivity {
                         increment = 0;
                         btn_next.setEnabled(true);
                         TOTAL_LIST_ITEMS = perguntas.size();
-
                     }
-
-
                 });
             }
-
         } else if (increment == 0) {
 
         } else {
@@ -589,34 +571,6 @@ public class AvaliacaoActivity extends AppCompatActivity {
     }
 
 
- /*   public void trataResposta(Resposta resposta, int posicaoDisciplina) {
-        Log.d("EM TratarResposta()", "LOG");
-        if (resposta != null) {
-            btn_next.setVisibility(View.VISIBLE);
-            if (respostasList.isEmpty()) {
-                resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
-                resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
-                respostasList.add(resposta);
-            } else {
-                if (!respostasList.contains(resposta)) {
-                    resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
-                    resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
-                    respostasList.add(resposta);
-                    Log.d("Não Contém R: ", resposta.getIdentificador());
-                } else {
-                    Log.d("Contém: ", resposta.getRespostaUsuário());
-                    respostasList.remove(resposta);
-                    resposta.setIdDiscplinaAvaliada(posicaoDisciplina);
-                    resposta.setIdAvaliacao(avaliacao.getIdAvaliacao());
-                    respostasList.add(resposta);
-                    Log.d("Contém Nova: ", resposta.getRespostaUsuário());
-                    Log.d("DEPOIS RESPOSTA", resposta.getRespostaUsuário());
-                    Log.d("DEPOIS ID", resposta.getIdentificador());
-                }
-            }
-        }
-
-    }*/
 }
 
 

@@ -4,18 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
@@ -38,13 +34,12 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     private List<OpcaoResposta> listOpcaoRespostas;
     private RadioButton radioButtons[];
     private List<RadioButton> listRadioButtons;
-    private static final int PERGUNTA_FECHADA = 1;
     private static final int PERGUNTA_ABERTA = 0;
     private LinearLayout ll;
     private RadioGroup radioGroup;
     private EditText editText;
     private Context context;
-    Button llAvaliacao;
+
 
     public AvaliacaoListAdapter(Activity activity, List<Pergunta> perguntas,
                                 List<OpcaoResposta> listOpcaoRespostas) {
@@ -98,50 +93,6 @@ public class AvaliacaoListAdapter extends BaseAdapter {
         Log.d("TIPO PERGUNTA", String.valueOf(tipoPergunta));
 
 
-
-        /*
-        * Condicional que verifica se pergunta é aberta,
-        * se for, gero um EditText para a pergunta e aguardo resposta dada pelo usuário
-        * */
-        llAvaliacao = (Button)activity.findViewById(R.id.next);
-        if (pergunta.getTipoPergunta() == PERGUNTA_ABERTA) {
-            editText= (EditText)convertView.findViewById(R.id.editDinamico);
-            editText.setVisibility(View.VISIBLE);
-            editText.setFocusable(true);
-
-            final InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-            editText.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-                        llAvaliacao.setVisibility(View.GONE);
-                        return false;
-                }
-            });
-
-            Resposta resposta = new Resposta();
-            resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
-            resposta.setRespostaUsuário(editText.getText().toString());
-            resposta.setIdentificador(String.valueOf(resposta.hashCode()));
-            Log.d("Resposta Aberta: ", resposta.getRespostaUsuário());
-
-
-            if(resposta.getRespostaUsuário().isEmpty() || resposta.getRespostaUsuário() == null){
-                resposta.setFlagTipoPergunta(false);
-                setData(false, null);
-            }else {
-                int vis = llAvaliacao.getVisibility();
-                if(vis == 8){
-                    llAvaliacao.setVisibility(View.VISIBLE);
-                }
-                llAvaliacao.setVisibility(View.VISIBLE);
-                resposta.setFlagTipoPergunta(true);
-                setData(true, resposta);
-            }
-
-        }
-
         radioGroup = new RadioGroup(context);
         radioGroup.setOrientation(LinearLayout.VERTICAL);
 
@@ -155,9 +106,7 @@ public class AvaliacaoListAdapter extends BaseAdapter {
 
             for (int i = 0; i < listOpcaoRespostas.size(); i++) {
                 if (listOpcaoRespostas.get(i).getIdPergunta() == idPergunta) {
-                    //Log.d(TAG, "IDs SÂO IGUAIS");
-                    Log.d(TAG, "ID" + idPergunta + "É = " + listOpcaoRespostas.get(i).getIdPergunta());
-
+                    Log.d(TAG, "ID" + idPergunta + " É = " + listOpcaoRespostas.get(i).getIdPergunta());
                     radioButtons[i] = new RadioButton(context);
                     radioButtons[i].setText(listOpcaoRespostas.get(i).getResposta());
                     radioButtons[i].setId(radioButtons[i].hashCode());
@@ -173,9 +122,9 @@ public class AvaliacaoListAdapter extends BaseAdapter {
                     String text = listRadioButtons.get(i).getText().toString();
                     // Log.d("VALOR BUTTON: ", text);
                 }
-                // Log.d("VALOR BUTTON FORA: ", listRadioButtons.get(i).getText().toString());
-                if(i == 0){
-                  setData(false,null);
+
+                if (i == 0) {
+                    setData(false, null);
                 }
             }
 
@@ -184,9 +133,9 @@ public class AvaliacaoListAdapter extends BaseAdapter {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     RadioButton rb = (RadioButton) group.findViewById(checkedId);
                     if (null != rb && checkedId > -1) {
-                        Toast.makeText(context, rb.getText(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, rb.getText(), Toast.LENGTH_SHORT).show();
                         String respostaCampo = (String) rb.getText();
-                        if(respostaCampo != null) {
+                        if (respostaCampo != null) {
                             Resposta resp = new Resposta();
                             resp.setIdPerguntaRespondida(idPergunta);
                             resp.setRespostaUsuário(respostaCampo);
@@ -198,7 +147,45 @@ public class AvaliacaoListAdapter extends BaseAdapter {
             });
             ll.addView(radioGroup);
         }
+        /*****************************************************************************************/
 
+        /*
+        * Condicional que verifica se pergunta é aberta,
+        * se for, gero um EditText para a pergunta e aguardo resposta dada pelo usuário
+        * */
+
+        if (pergunta.getTipoPergunta() == PERGUNTA_ABERTA) {
+            final Resposta resposta = new Resposta();
+
+           editText= (EditText) convertView.findViewById(R.id.editDinamico);
+           editText.setVisibility(View.VISIBLE);
+
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+                @Override
+                public void onFocusChange(View v, boolean hasFocus){
+                    String entrada;
+                    if(!hasFocus){
+                        editText= (EditText) v;
+                        entrada= editText.getText().toString();
+                        resposta.setRespostaUsuário(editText.getText().toString());
+                        resposta.setIdentificador(String.valueOf(resposta.hashCode()));
+                        resposta.setIdPerguntaRespondida(pergunta.getIdPergunta());
+                        Log.d("RESPOSTA", entrada);
+
+                        if (resposta.getRespostaUsuário() == null || resposta.getRespostaUsuário().isEmpty()) {
+                            setData(false, null);
+                        } else {
+                            setData(true, resposta);
+                        }
+                    }
+                    }
+                });
+
+
+            if (editText == null || editText.length()<2) {
+                setData(false, null);
+            }
+        }
         return convertView;
     }
 
@@ -208,8 +195,9 @@ public class AvaliacaoListAdapter extends BaseAdapter {
     * */
     public void setData(boolean data, Resposta resposta) {
     }
-
-
 }
+
+
+
 
 

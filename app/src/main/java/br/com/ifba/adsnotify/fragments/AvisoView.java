@@ -41,6 +41,7 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
     private View rootView;
     private AvisoListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    TextView tv;
 
 
     public AvisoView() {}
@@ -58,10 +59,13 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
         rootView = inflater.inflate(R.layout.aviso_layout_swipe, container, false);
 
+
         FlipView flipView = (FlipView)rootView.findViewById(R.id.flip_view);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         adapter = new AvisoListAdapter(getActivity().getApplicationContext(), list);
         flipView.setAdapter(adapter);
+
+       // tv = (TextView) flipView.findViewById(R.id.titleAviso);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -69,6 +73,9 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                                     @Override
                                     public void run() {
                                         swipeRefreshLayout.setRefreshing(true);
+                                        if(!list.isEmpty()){
+                                            list.clear();
+                                        }
                                         carregaAviso();
                                     }
                                 }
@@ -99,8 +106,8 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 }
                    adapter.notifyDataSetChanged();
                 }else{
-                    TextView tv = (TextView) rootView.findViewById(R.id.titleAviso);
-                    tv.setText("Sem Novos Avisos!");
+                   // tv.setText("Sem Novos Avisos!");
+                    Toast.makeText(getActivity(),"Sem Novos Avisos!",Toast.LENGTH_LONG).show();
                     swipeRefreshLayout.setRefreshing(true);
                 }
 
