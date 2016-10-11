@@ -15,6 +15,7 @@ public class Config {
     // Tema global para receber aplicativos de notificações push
     public static final String TOPIC_GLOBAL = "global";
 
+    public static final String ROOT_DOC = "https://adsprojectifba.herokuapp.com/";
 
     public static final String CARREGA_AVISOS = "https://adsprojectifba.herokuapp.com/api/avisos";
     public static final String URL_DISCIPLINAS = "https://adsprojectifba.herokuapp.com/api/disciplinas";
@@ -26,7 +27,10 @@ public class Config {
     public static final String INFO_USER = "https://adsprojectifba.herokuapp.com/api/informacaoUser";
     public static final String RESPOSTAS_ARRAY = "https://adsprojectifba.herokuapp.com/api/respostaQuestionario";
 
-    public static final String ROOT_DOC = "https://adsprojectifba.herokuapp.com/";
+    public static final String TOKEN_GCM = "https://adsprojectifba.herokuapp.com/api/token";
+
+
+
 
 
 

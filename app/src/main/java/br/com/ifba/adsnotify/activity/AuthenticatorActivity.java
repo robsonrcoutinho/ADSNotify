@@ -92,7 +92,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
             }
         });
 
-        signupLink = (TextView) findViewById(R.id.idSignup);
+       /* signupLink = (TextView) findViewById(R.id.idSignup);
         signupLink.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -100,7 +100,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
-        });
+        });*/
     }
 
     /**
