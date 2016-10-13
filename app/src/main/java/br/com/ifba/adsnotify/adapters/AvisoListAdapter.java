@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
@@ -54,30 +55,23 @@ public class AvisoListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View layout = convertView;
         if (convertView == null)
-            layout = inflater.inflate(R.layout.aviso_layout, null);
+            layout = inflater.inflate(R.layout.feed, null);
 
         final Mensagem data = avisosList.get(position);
          Log.d("Valor Adapter::", data.getAvisoTitle().toString());
 
+        ImageView image = (ImageView) layout.findViewById(R.id.imageAvisoList);
+        image.setImageResource(R.drawable.aviso_icon_notification);
 
-        Typeface face = Typeface.createFromAsset(context.getAssets(), "Roboto-BlackItalic.ttf");
-        TextView titulo = (TextView)layout.findViewById(R.id.titleAviso);
+        TextView titulo = (TextView)layout.findViewById(R.id.tituloAvisoFeed);
         titulo.setText(data.getAvisoTitle());
-        titulo.setTypeface(face);
-
-        Typeface dataFace = Typeface.createFromAsset(context.getAssets(), "Roboto-MediumItalic.ttf");
-        TextView dataTv = (TextView)layout.findViewById(R.id.dataAviso);
-        dataTv.setText(data.getCreateAviso());
-        dataTv.setTypeface(dataFace);
-        dataTv.setTextSize(10);
-
-        Typeface face2 = Typeface.createFromAsset(context.getAssets(), "Roboto-MediumItalic.ttf");
-        TextView descricao = (TextView)layout.findViewById(R.id.description);
-        descricao.setText("     "  + data.getAvisoBody());
-        descricao.setTextSize(15);
-        descricao.setTypeface(face2);
 
 
+        TextView dataAviso = (TextView)layout.findViewById(R.id.timestamp);
+        dataAviso.setText(data.getCreateAviso());
+
+        TextView corpoAviso = (TextView)layout.findViewById(R.id.idTextoAviso);
+        corpoAviso.setText("     "  + data.getAvisoBody());
         return layout;
     }
 }

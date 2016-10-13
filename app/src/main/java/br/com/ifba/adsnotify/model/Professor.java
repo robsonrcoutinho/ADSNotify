@@ -1,9 +1,11 @@
 package br.com.ifba.adsnotify.model;
 
+import java.util.Comparator;
+
 /**
  * Created by Robson on 27/05/2016.
  */
-public class Professor {
+public class Professor implements Comparator<Professor> {
     private String matricula;
     private String nome;
     private String curriculo;
@@ -30,5 +32,15 @@ public class Professor {
 
     public void setCurriculo(String curriculo) {
         this.curriculo = curriculo;
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
+    @Override
+    public int compare(Professor p1, Professor p2) {
+        return p1.getNome().compareTo(p2.getNome().toString());
     }
 }

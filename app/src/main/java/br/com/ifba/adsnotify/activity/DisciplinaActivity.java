@@ -123,6 +123,7 @@ public class DisciplinaActivity extends AppCompatActivity {
                             disc.setEmenta(Config.ROOT+obj.getString("ementa"));
 
                             discList.add(disc);
+                            Collections.sort(discList,disc);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

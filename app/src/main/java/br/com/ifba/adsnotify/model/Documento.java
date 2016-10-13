@@ -1,9 +1,11 @@
 package br.com.ifba.adsnotify.model;
 
+import java.util.Comparator;
+
 /**
  * Created by Robson on 01/06/2016.
  */
-public class Documento {
+public class Documento  implements Comparator<Documento> {
     private String id;
     private String url;
     private String titulo;
@@ -48,5 +50,15 @@ public class Documento {
 
     public void setFoto(int foto) {
         this.foto = foto;
+    }
+
+    @Override
+    public String toString() {
+        return getTitulo();
+    }
+
+    @Override
+    public int compare(Documento d1, Documento d2) {
+        return d1.getTitulo().compareTo(d2.getTitulo().toString());
     }
 }

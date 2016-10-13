@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.ProfessorListAdapter;
@@ -117,6 +118,7 @@ public class ProfessorActivity extends AppCompatActivity {
                         prof.setCurriculo(obj.getString("curriculo"));
 
                         profList.add(prof);
+                        Collections.sort(profList,prof);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

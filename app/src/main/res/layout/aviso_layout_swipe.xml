@@ -1,3 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_layouts"
+    android:orientation="vertical">
+
+<ImageView
+    android:id="@+id/falhaAviso"
+    android:layout_width="140dp"
+    android:layout_height="140dp"
+    android:layout_marginTop="135dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="50dp"
+    android:src="@drawable/icon_check_avisos" />
+
+    <TextView
+        android:id="@+id/tituloAviso"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Não há avisos!"
+        android:textColor="@color/color_font_aviso"
+        android:textSize="@dimen/feed_item_aviso_name"
+        android:textStyle="bold" />
+
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
@@ -13,12 +40,6 @@
         android:dividerHeight="1dp"
         android:listSelector="@drawable/aviso_list_selector" />
 
-<!--    <se.emilsjolander.flipview.FlipView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:flipview="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/flip_view"
-        flipview:orientation="vertical"
-        flipview:overFlipMode="rubber_band" /> -->
-
 </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>

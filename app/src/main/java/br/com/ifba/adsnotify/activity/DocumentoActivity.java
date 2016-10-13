@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.DocumentoListAdapter;
@@ -115,6 +116,8 @@ public class DocumentoActivity extends AppCompatActivity {
                                 doc.setTitulo(obj.getString("titulo"));
                                 doc.setUrl(Config.ROOT+obj.getString("url"));
                                 docList.add(doc);
+
+                                Collections.sort(docList,doc);
 
                                 Log.d(TAG, String.valueOf(i));
 

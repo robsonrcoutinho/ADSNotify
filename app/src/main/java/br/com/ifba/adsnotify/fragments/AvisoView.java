@@ -6,7 +6,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +44,8 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
     private AvisoListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
+    ImageView image;
+    TextView textView;
 
 
 
@@ -59,6 +63,12 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
         list =  new ArrayList<>();
 
         rootView = inflater.inflate(R.layout.aviso_layout_swipe, container, false);
+
+        image = (ImageView) rootView.findViewById(R.id.falhaAviso);
+        textView = (TextView) rootView.findViewById(R.id.tituloAviso);
+        image.setVisibility(View.GONE);
+        textView.setVisibility(View.GONE);
+
 
         listView = (ListView)rootView.findViewById(R.id.listAviso);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
@@ -90,7 +100,7 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 adapter.notifyDataSetChanged();
 
                 if(response.length() > 0){
-                    for (int i = response.length(); i > 0; i--){
+                    for (int i = response.length(); i >= 0; i--){
                     JSONObject msgJSON = null;
                     try {
 
@@ -120,8 +130,21 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 }
                    adapter.notifyDataSetChanged();
                 }else{
-                    Toast.makeText(getActivity(),"Sem Novos Avisos!",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(),"Sem Novos Avisos!",Toast.LENGTH_LONG).show();
+                    image.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setText("Não há novos avisos! Clique na imagem para regarregar página.");
                     swipeRefreshLayout.setRefreshing(true);
+
+                    image.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            image.setVisibility(View.GONE);
+                            textView.setVisibility(View.GONE);
+                            swipeRefreshLayout.setRefreshing(true);
+                            carregaAviso();
+                        }
+                    });
                 }
 
                 swipeRefreshLayout.setRefreshing(false);
@@ -131,7 +154,21 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
             @Override
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(getActivity(),"Verifique sua conexão!",Toast.LENGTH_LONG).show();
+               // Toast.makeText(getActivity(),"Verifique sua conexão!",Toast.LENGTH_LONG).show();
+                image.setVisibility(View.VISIBLE);
+                image.setImageResource(R.drawable.icon_error_network);
+                textView.setVisibility(View.VISIBLE);
+                textView.setText("Erro conexão! Clique na imagem para regarregar página.");
+
+                image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        image.setVisibility(View.GONE);
+                        textView.setVisibility(View.GONE);
+                        swipeRefreshLayout.setRefreshing(true);
+                        carregaAviso();
+                    }
+                });
 
             }
         });
