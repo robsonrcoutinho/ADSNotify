@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
+import br.com.ifba.adsnotify.activity.RenderViewDocs;
 import br.com.ifba.adsnotify.app.Config;
 import br.com.ifba.adsnotify.model.Documento;
 
@@ -75,13 +77,10 @@ public class DocumentoListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String URLdoc = Config.ROOT_DOC;
-                URLdoc+=docs.get(position).getUrl();
-
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse(URLdoc),
-                        "text/html");
+                Bundle params = new Bundle();
+                params.putSerializable("page", docs.get(position).getUrl());
+                Intent intent = new Intent(activity, RenderViewDocs.class);
+                intent.putExtras(params);
                 context.startActivity(intent);
             }
         });

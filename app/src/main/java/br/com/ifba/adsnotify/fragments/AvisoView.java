@@ -1,12 +1,12 @@
 package br.com.ifba.adsnotify.fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -14,7 +14,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.AvisoListAdapter;
@@ -23,7 +26,6 @@ import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.gcm.NotificationUtils;
 import br.com.ifba.adsnotify.helper.MyPreferenceManager;
 import br.com.ifba.adsnotify.model.Mensagem;
-import se.emilsjolander.flipview.FlipView;
 
 /**
  * Classe responsavel pela apresentação de avisos
@@ -33,14 +35,14 @@ import se.emilsjolander.flipview.FlipView;
  */
 
 public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = AvisoView.class.getSimpleName();
     private Mensagem mensagem;
     private List<Mensagem> list;
     private LayoutInflater inflater;
     private View rootView;
     private AvisoListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    FlipView flipView;
+    private ListView listView;
+
 
 
     public AvisoView() {}
@@ -58,12 +60,10 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
         rootView = inflater.inflate(R.layout.aviso_layout_swipe, container, false);
 
-
-        flipView = (FlipView)rootView.findViewById(R.id.flip_view);
-        flipView.peakNext(true);
+        listView = (ListView)rootView.findViewById(R.id.listAviso);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         adapter = new AvisoListAdapter(getActivity().getApplicationContext(), list);
-        flipView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -71,9 +71,6 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                                     @Override
                                     public void run() {
                                         swipeRefreshLayout.setRefreshing(true);
-                                        if(!list.isEmpty()){
-                                            list.clear();
-                                        }
                                         carregaAviso();
                                     }
                                 }
@@ -82,25 +79,44 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
        }
 
     public void carregaAviso(){
-         swipeRefreshLayout.setRefreshing(true);
+        MyPreferenceManager.clear();
+        NotificationUtils.clearNotifications();
+        swipeRefreshLayout.setRefreshing(true);
 
         JsonArrayRequest req = new JsonArrayRequest(Config.CARREGA_AVISOS,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                list.clear();
+                adapter.notifyDataSetChanged();
+
                 if(response.length() > 0){
-                for (int i = 0; i < response.length(); i++) {
+                    for (int i = response.length(); i > 0; i--){
                     JSONObject msgJSON = null;
                     try {
+
                         msgJSON = (JSONObject) response.get(i);
                         String titulo = msgJSON.getString("titulo");
                         String mensg = msgJSON.getString("mensagem");
                         String create = msgJSON.getString("updated_at");
-                        iniciaLista(titulo, mensg, create);
+
+                        SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date dateObj = sdt.parse(create);
+
+                        SimpleDateFormat posFormato = new SimpleDateFormat("dd MMM yy");
+                        SimpleDateFormat posFormato2 = new SimpleDateFormat("HH:mm");
+                        String as = "  às  ";
+                        String data = posFormato.format(dateObj);
+                        String hora = posFormato2.format(dateObj);
+
+                        String dataFinal = data+as+hora+"h";
+
+                        iniciaLista(titulo, mensg, dataFinal);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-
                 }
                    adapter.notifyDataSetChanged();
                 }else{
@@ -112,7 +128,6 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -123,8 +138,6 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
         MyApplication.getInstance().addToRequestQueue(req);
 
     }
-
-
 
     public void iniciaLista(String titulo, String corpo, String data){
         mensagem = new Mensagem();

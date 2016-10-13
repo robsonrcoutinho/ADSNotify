@@ -4,12 +4,21 @@
     android:background="@color/color_layouts"
     android:layout_height="wrap_content">
 
-    <se.emilsjolander.flipview.FlipView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <ListView
+        android:id="@+id/listAviso"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/aviso_list_selector" />
+
+<!--    <se.emilsjolander.flipview.FlipView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:flipview="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/flip_view"
         flipview:orientation="vertical"
-        flipview:overFlipMode="rubber_band" />
+        flipview:overFlipMode="rubber_band" /> -->
 
 </android.support.v4.widget.SwipeRefreshLayout>

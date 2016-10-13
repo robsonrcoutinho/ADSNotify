@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.adapters.DisciplinaListAdapter;
@@ -62,7 +63,7 @@ public class DisciplinaActivity extends AppCompatActivity {
         final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -71,7 +72,6 @@ public class DisciplinaActivity extends AppCompatActivity {
             actionBar.setTitle("Disciplinas");
             actionBar.show();
         }
-
 
         listView = (ListView) findViewById(R.id.listDisciplinas);
         adapter = new DisciplinaListAdapter(this, discList);
@@ -120,9 +120,9 @@ public class DisciplinaActivity extends AppCompatActivity {
                             disc.setNomeDisciplina(obj.getString("nome"));
                             disc.setCargaHoraria(obj.getString("carga_horaria") + " Horas");
                             disc.setCodigo(obj.getString("codigo"));
-                            disc.setEmenta(obj.getString("ementa"));
+                            disc.setEmenta(Config.ROOT+obj.getString("ementa"));
 
-                                discList.add(disc);
+                            discList.add(disc);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -139,7 +139,6 @@ public class DisciplinaActivity extends AppCompatActivity {
                 Toast.makeText(DisciplinaActivity.this,
                         "Erro ao tentar conectar! Verifique sua conexão",
                         Toast.LENGTH_LONG).show();
-               // startActivity(new Intent(DisciplinaActivity.this, MainActivity.class));
                 image.setVisibility(View.VISIBLE);
 
             }

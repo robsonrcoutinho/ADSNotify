@@ -6,11 +6,20 @@
     android:orientation="vertical"
     android:background="@color/color_layouts">
 
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text=" "/>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:background="@drawable/bordas_aviso">
+        android:background="@drawable/list_row_selector">
 
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"

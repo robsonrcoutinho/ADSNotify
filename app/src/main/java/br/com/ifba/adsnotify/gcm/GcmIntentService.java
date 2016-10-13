@@ -8,24 +8,18 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import br.com.ifba.adsnotify.R;
 import br.com.ifba.adsnotify.app.Config;
-import br.com.ifba.adsnotify.app.EndPoints;
 import br.com.ifba.adsnotify.app.MyApplication;
 import br.com.ifba.adsnotify.model.User;
 
@@ -77,7 +71,7 @@ public class GcmIntentService extends IntentService {
             token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
-            Log.d(TAG, "GCM Registration Token INTENT: " + token);
+            Log.d(TAG, "GCM Registro Token INTENT: " + token);
 
             // Enviar o ID de registro para o servidor
             sendRegistrationToServer(token, emailuser);

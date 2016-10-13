@@ -67,7 +67,7 @@ public class AvisoListAdapter extends BaseAdapter {
 
         Typeface dataFace = Typeface.createFromAsset(context.getAssets(), "Roboto-MediumItalic.ttf");
         TextView dataTv = (TextView)layout.findViewById(R.id.dataAviso);
-        dataTv.setText("Data: "+data.getCreateAviso());
+        dataTv.setText(data.getCreateAviso());
         dataTv.setTypeface(dataFace);
         dataTv.setTextSize(10);
 
@@ -76,6 +76,7 @@ public class AvisoListAdapter extends BaseAdapter {
         descricao.setText("     "  + data.getAvisoBody());
         descricao.setTextSize(15);
         descricao.setTypeface(face2);
+
 
         return layout;
     }

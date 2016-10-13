@@ -127,11 +127,9 @@ public class NotificationUtils{
         Notification notification;
         notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
-    //            .setContentTitle(title)
                 .setContentIntent(resultPendingIntent)
                 .setSound(alarmSound)
                 .setStyle(inboxStyle)
-//                .setWhen(getTimeMilliSec(timeStamp))
                 .setSmallIcon(R.drawable.ic_notification_small)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
@@ -154,7 +152,6 @@ public class NotificationUtils{
                 .setContentIntent(resultPendingIntent)
                 .setSound(alarmSound)
                 .setStyle(bigPictureStyle)
-            //    .setWhen(getTimeMilliSec(timeStamp))
                 .setSmallIcon(R.drawable.ic_notification_small)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
@@ -226,16 +223,5 @@ public class NotificationUtils{
     public static void clearNotifications() {
         NotificationManager notificationManager = (NotificationManager) MyApplication.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
-    }
-
-    public static long getTimeMilliSec(String timeStamp) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date date = format.parse(timeStamp);
-            return date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 }

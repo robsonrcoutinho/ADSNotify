@@ -113,7 +113,7 @@ public class DocumentoActivity extends AppCompatActivity {
                                 Documento doc = new Documento();
 
                                 doc.setTitulo(obj.getString("titulo"));
-                                doc.setUrl(obj.getString("url"));
+                                doc.setUrl(Config.ROOT+obj.getString("url"));
                                 docList.add(doc);
 
                                 Log.d(TAG, String.valueOf(i));
@@ -121,7 +121,6 @@ public class DocumentoActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Log.d(TAG, docList.get(i).getTitulo());
                         }
                         adapter.notifyDataSetChanged();
                     }

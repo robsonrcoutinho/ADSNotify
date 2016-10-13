@@ -95,6 +95,11 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <!-- RenderViewsDocs Activity-->
+        <activity android:name="br.com.ifba.adsnotify.activity.RenderViewDocs"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- SERVICO DE AUTENTICACAO -->
         <service android:name=".sync.AuthenticationService">
             <intent-filter>

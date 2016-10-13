@@ -35,11 +35,7 @@ public class MyGcmPushReceiver extends GcmListenerService {
         String message = bundle.getString("message");
         String image = bundle.getString("image");
         String timestamp = bundle.getString("created_at");
-        Log.e(TAG, "From: " + from);
-        Log.e(TAG, "Title: " + title);
-        Log.e(TAG, "message: " + message);
-        Log.e(TAG, "image: " + image);
-        Log.e(TAG, "timestamp: " + timestamp);
+
 
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
 
