@@ -16,12 +16,13 @@
      <color name="color_primary">#008000</color>
      <color name="color_primary_dark">#008000</color>
      <color name="accent_color">#ffffff</color>
-    <color name="color_layouts">#e8f5e9</color>
+     <color name="color_layouts">#e8f5e9</color>
+     <color name="carga_horaria">#696969</color>
 
 
 
      <!-- Disciplinas-->
-    <color name="codigo_color">#888888</color>
+    <color name="codigo_color">#2F4F4F</color>
     <color name="list_divider">#d9d9d9</color>
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>
@@ -34,6 +35,6 @@
     <color name="feed_item_bg">#FFFFFF</color>
     <color name="feed_item_border">#c2c3c8</color>
     <color name="link">#0a80d1</color>
-    <color name="color_font_aviso">#000000</color>
+    <color name="color_font_app">#000000</color>
 
 </resources>

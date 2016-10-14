@@ -20,8 +20,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="5dp"
-        android:text="Não há avisos!"
-        android:textColor="@color/color_font_aviso"
+        android:textColor="@color/color_font_app"
         android:textSize="@dimen/feed_item_aviso_name"
         android:textStyle="bold" />
 

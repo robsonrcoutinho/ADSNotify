@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:src="@drawable/disc"
+        android:src="@drawable/dics"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
+        android:textColor="@color/color_font_app"
         android:textSize="@dimen/nome_disciplina"
         android:textStyle="bold" />
 
@@ -32,6 +33,8 @@
         android:layout_below="@id/idNomeDisciplina"
         android:layout_toRightOf="@+id/thumbnail"
         android:layout_marginTop="1dip"
+        android:textStyle="italic"
+        android:textColor="@color/carga_horaria"
         android:textSize="@dimen/carga_horaria" />
 
     <!-- Codigo Disciplina -->
@@ -42,6 +45,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:textColor="@color/codigo_color"
+        android:textStyle="bold"
         android:textSize="@dimen/codigo" />
 
     <ImageView android:layout_width="wrap_content"

@@ -1,7 +1,7 @@
 package br.com.ifba.adsnotify.app;
 
 /**
- * Esta classe contém informações de configuração do app relacionado com GCM.
+ * Esta classe contém informações de configuração do app relacionado com GCM e serviços RESTful.
  * @Author Robson Coutinho
  * @version 1.0
  * @since 10/05/2016.
@@ -13,7 +13,7 @@ public class Config {
     public static boolean appendNotificationMessages = true;
 
 
-    public static final String ROOT = "http://coadseunapolis.ifba.edu.br/";
+    public static final String ROOT = "http://www.muitootimo.com.br/";
 
 
     public static final String CARREGA_AVISOS = ROOT+"api/avisos";

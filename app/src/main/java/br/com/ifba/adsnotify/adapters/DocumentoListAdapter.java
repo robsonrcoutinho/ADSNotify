@@ -67,7 +67,7 @@ public class DocumentoListAdapter extends BaseAdapter {
         Documento doc = docs.get(position);
 
 
-        image.setImageResource(R.drawable.documento);
+        image.setImageResource(R.drawable.docs);
 
 
         tituto.setText(doc.getTitulo());

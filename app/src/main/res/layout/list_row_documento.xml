@@ -18,6 +18,7 @@
         android:id="@+id/idTituloDocumento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_font_app"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:textSize="@dimen/nome_disciplina"

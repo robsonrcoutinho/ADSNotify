@@ -71,6 +71,7 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
 
         listView = (ListView)rootView.findViewById(R.id.listAviso);
+        listView.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         adapter = new AvisoListAdapter(getActivity().getApplicationContext(), list);
         listView.setAdapter(adapter);
@@ -130,7 +131,6 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 }
                    adapter.notifyDataSetChanged();
                 }else{
-                    //Toast.makeText(getActivity(),"Sem Novos Avisos!",Toast.LENGTH_LONG).show();
                     image.setVisibility(View.VISIBLE);
                     textView.setVisibility(View.VISIBLE);
                     textView.setText("Não há novos avisos! Clique na imagem para regarregar página.");
@@ -154,17 +154,17 @@ public class AvisoView extends Fragment implements SwipeRefreshLayout.OnRefreshL
             @Override
             public void onErrorResponse(VolleyError error) {
                 swipeRefreshLayout.setRefreshing(false);
-               // Toast.makeText(getActivity(),"Verifique sua conexão!",Toast.LENGTH_LONG).show();
                 image.setVisibility(View.VISIBLE);
                 image.setImageResource(R.drawable.icon_error_network);
                 textView.setVisibility(View.VISIBLE);
                 textView.setText("Erro conexão! Clique na imagem para regarregar página.");
-
+                listView.setVisibility(View.GONE);
                 image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         image.setVisibility(View.GONE);
                         textView.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
                         swipeRefreshLayout.setRefreshing(true);
                         carregaAviso();
                     }
