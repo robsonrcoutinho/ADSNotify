@@ -111,7 +111,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         Log.i(TAG, ".signInLocal()");
 
         if (!validate()) {
-            onLoginFailed();
+           // onLoginFailed();
             return;
         }
         btnSignLocal.setEnabled(false);
@@ -225,8 +225,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
             emailUsuario.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            senhaUsuario.setError("Entre 4 e 10 caracteres alfanuméricos");
+        if (password.isEmpty()) {
+            senhaUsuario.setError("Campo senha não pode ser vazio!");
             valid = false;
         } else {
             senhaUsuario.setError(null);

@@ -13,7 +13,7 @@ public class Config {
     public static boolean appendNotificationMessages = true;
 
 
-    public static final String ROOT = "http://www.muitootimo.com.br/";
+    public static final String ROOT = "http://coadseunapolis.ifba.edu.br/";
 
 
     public static final String CARREGA_AVISOS = ROOT+"api/avisos";
